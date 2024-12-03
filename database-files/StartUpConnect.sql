@@ -113,7 +113,6 @@ CREATE TABLE IF NOT EXISTS Applications (
     StudentID INTEGER NOT NULL,
     JobID INTEGER NOT NULL,
     SubmissionDate DATETIME NOT NULL,
-    Status varchar(150) NOT NULL,
 
     CONSTRAINT fk_jobIDApp FOREIGN KEY (jobID)
         REFERENCES Positions (JobID)

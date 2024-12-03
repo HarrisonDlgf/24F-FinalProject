@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  # Flask API 
+  api:
+    build: ./api
+    container_name: web-api
+    hostname: web-api
+    volumes:
+      - ./api:/apicode
+    ports:
+      - "5000:5000"  
+    depends_on:
+      - db 
+    environment:
+      - DATABASE_URL=mysql+pymysql://user:password@db:3306/startupconnect 
+
+  # Streamlit Frontend 
+  app:
+    build: ./app
+    container_name: web-app
+    hostname: web-app
+    volumes:
+      - ./app/src:/appcode
+    ports:
+      - "8501:8501"  
+    depends_on:
+      - api  
+
+  # MySQL Database Service
+  db:
+    image: mysql:8  
+    container_name: mysql_db
+    hostname: db
+    environment:
+      MYSQL_ROOT_PASSWORD: startupsrule  
+      MYSQL_DATABASE: startupconnect
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password  
+    volumes:
+      - ./database-files:/docker-entrypoint-initdb.d/:ro
+      - db_data:/var/lib/mysql  
+    ports:
+      - "3306:3306"  
+
+
+
+
+
