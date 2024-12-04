@@ -34,44 +34,57 @@ SideBarLinks(show_home=True)
 
 # set the title of the page and provide a simple prompt. 
 logger.info("Loading the Home page of the app")
-st.title('CS 3200 Sample Semester Project App')
+st.title('Welcome to StartUpConnect! A platform for connecting startups with Northeastern University.')
 st.write('\n\n')
-st.write('### HI! As which user would you like to log in?')
+st.write('### Which user would you like to log in?')
 
 # For each of the user personas for which we are implementing
 # functionality, we put a button on the screen that the user 
 # can click to MIMIC logging in as that mock user. 
 
-if st.button("Act as John, a Political Strategy Advisor", 
+# Jeff, Second Year Undergraduate student searching for a startup to join
+if st.button("Act as Jeff, a Second Year searching for a startup to join", 
             type = 'primary', 
             use_container_width=True):
     # when user clicks the button, they are now considered authenticated
     st.session_state['authenticated'] = True
     # we set the role of the current user
-    st.session_state['role'] = 'pol_strat_advisor'
+    st.session_state['role'] = 'second_year_undergraduate'
     # we add the first name of the user (so it can be displayed on 
     # subsequent pages). 
-    st.session_state['first_name'] = 'John'
+    st.session_state['first_name'] = 'Jeff'
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
-    logger.info("Logging in as Political Strategy Advisor Persona")
-    st.switch_page('pages/00_Pol_Strat_Home.py')
+    logger.info("Logging in as Jeff, a Second Year Undergraduate searching for a startup to join")
+    st.switch_page('pages/00_Student_Home.py')
 
-if st.button('Act as Mohammad, an USAID worker', 
+# Maddy, senior at NEU searching for a full-time job
+if st.button('Act as Maddy, a senior at NEU searching for a full-timejob', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'usaid_worker'
-    st.session_state['first_name'] = 'Mohammad'
-    st.switch_page('pages/10_USAID_Worker_Home.py')
+    st.session_state['role'] = 'senior'
+    st.session_state['first_name'] = 'Maddy'
+    st.switch_page('pages/00_FullTime_Student_Home.py')
 
-if st.button('Act as System Administrator', 
-            type = 'primary', 
+# David, works at Northeastern University’s Career Center
+if st.button('Act as David, a Career Center staff member evaluating internship and job placement success', 
+            type='primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'administrator'
-    st.session_state['first_name'] = 'SysAdmin'
-    st.switch_page('pages/20_Admin_Home.py')
+    st.session_state['role'] = 'career_center_staff'
+    st.session_state['first_name'] = 'David'
+    st.switch_page('pages/00_Career_Center_Home.py')
+
+# Alex, runs a small tech startup focused on AI-driven healthcare solutions
+if st.button('Act as Alex, a startup founder looking to hire interns for AI-driven healthcare projects', 
+            type='primary', 
+            use_container_width=True):
+    st.session_state['authenticated'] = True
+    st.session_state['role'] = 'startup_founder'
+    st.session_state['first_name'] = 'Alex'
+    st.switch_page('pages/00_Startup_Founder_Home.py')
+
 
 
 
