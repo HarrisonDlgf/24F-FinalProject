@@ -72,3 +72,78 @@ VALUES (24, 'Sebastian Young', 'New York, NY', 'No experience', 'US Citizen', 76
 
 INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication) 
 VALUES (25, 'Ella Allen', 'Miami, FL', 'Previous co-op', 'Green Card Holder', 89, 13);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (26, 'Jackson Carter', 'Denver, CO', 'Previous internship', 'US Citizen', 80, 12);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (27, 'Avery Evans', 'Philadelphia, PA', 'No experience', 'Green Card Holder', 73, 10);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (28, 'Ella Nguyen', 'Boston, MA', 'Previous co-op', 'Requires Sponsorship', 92, 14);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (29, 'Daniel Flores', 'Austin, TX', 'Previous internship', 'US Citizen', 75, 9);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (30, 'Victoria Green', 'San Francisco, CA', 'No experience', 'Green Card Holder', 79, 8);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (31, 'Ethan Adams', 'Miami, FL', 'Previous internship', 'Requires Sponsorship', 83, 11);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (32, 'Sophia Hill', 'Chicago, IL', 'Previous co-op', 'US Citizen', 77, 7);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (33, 'Jack Scott', 'Dallas, TX', 'No experience', 'Green Card Holder', 72, 6);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (34, 'Grace Wright', 'Los Angeles, CA', 'Previous internship', 'Requires Sponsorship', 89, 10);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (35, 'Samuel Baker', 'Denver, CO', 'No experience', 'US Citizen', 74, 9);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (36, 'Layla Rivera', 'New York, NY', 'Previous co-op', 'Green Card Holder', 85, 12);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (37, 'Zoe Hall', 'Boston, MA', 'Previous internship', 'Requires Sponsorship', 90, 13);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (38, 'Hannah Turner', 'Chicago, IL', 'No experience', 'US Citizen', 70, 8);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (39, 'Aria Diaz', 'Philadelphia, PA', 'Previous internship', 'Green Card Holder', 78, 11);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (40, 'Christopher Parker', 'San Francisco, CA', 'No experience', 'Requires Sponsorship', 79, 12);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (41, 'Joshua Edwards', 'Los Angeles, CA', 'Previous internship', 'Green Card Holder', 84, 8);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (42, 'John Torres', 'Austin, TX', 'Previous co-op', 'US Citizen', 90, 13);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (43, 'Aurora Mitchell', 'Boston, MA', 'No experience', 'Requires Sponsorship', 76, 9);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (44, 'Penelope Carter', 'Denver, CO', 'Previous internship', 'Green Card Holder', 81, 10);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (45, 'Victoria Cruz', 'Miami, FL', 'No experience', 'US Citizen', 70, 6);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (46, 'Andrew Gomez', 'Philadelphia, PA', 'Previous co-op', 'Green Card Holder', 87, 11);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (47, 'Lily Phillips', 'Chicago, IL', 'Previous internship', 'Requires Sponsorship', 82, 7);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (48, 'Daniel Evans', 'Dallas, TX', 'No experience', 'US Citizen', 78, 8);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (49, 'Sophia Roberts', 'New York, NY', 'Previous internship', 'Green Card Holder', 85, 10);
+
+INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication)
+VALUES (50, 'William Baker', 'San Francisco, CA', 'Previous co-op', 'Requires Sponsorship', 91, 14);
