@@ -18,10 +18,12 @@ applications = Blueprint('applications', __name__)
 @applications.route('/applications/<int:job_id>', methods=['GET'])
 def job_apps(jobID):
     cursor = db.get_db().cursor()
-    cursor.execute('''
-    TO BE DONE
+    query = ('''
+    SELECT ApplicationID, StudentID, JobID, SubmissionDate, Status
+        FROM Applications
+        WHERE JobID = %s
     ''')
-    
+    cursor.execute(query, jobID)
     theData = cursor.fetchall()
     
     the_response = make_response(jsonify(theData))
@@ -29,3 +31,28 @@ def job_apps(jobID):
     return the_response
 
 # Making more requests for applications
+# Submitting a job app per jobID
+@applications.route('/applications/<int:job_id>', methods=['POST'])
+def submitting_app(jobID):
+    application_info = request.json
+    student_id = application_info['student_id']
+    submission_date = application_info['submission_date']
+
+    cursor = db.get_db().cursor()
+    query = ('''
+    INSERT INTO Applications (StudentID, JobID, SubmissionDate, Status)
+    VALUES(%s, %s, %s, %s)
+    ''')
+    cursor.execute(query, (student_id, job_id, submission_date, "UNDER REVIEW"))
+    db.get_db().commit()
+
+    response = {
+        "message": "Application submitted.",
+        "job_id": job_id,
+        "student_id": student_id,
+        "status": "UNDER REVIEW"
+    }
+
+    the_response = make_response(jsonify(response))
+    the_response.status_code = 201  
+    return the_response
