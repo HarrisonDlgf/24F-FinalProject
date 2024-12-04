@@ -81,3 +81,18 @@ def update_workexperience(JobID):
     cursor.execute(query, tuple(data))
     db.get_db().commit()
     return make_response('Work experience updated successfully!', 200)
+
+    #------------------------------------------------------------
+# Delete a specific instance of work experience
+# Used by Maddy and Jeff to remove incorrect or outdated entries
+@workexperiences.route('/workexperiences/<JobID>', methods=['DELETE'])
+def delete_workexperience(JobID):
+    current_app.logger.info(f'DELETE /workexperiences/<JobID> route for {JobID}')
+    cursor = db.get_db().cursor()
+
+    # Execute the delete operation
+    cursor.execute('DELETE FROM workexperiences WHERE JobID = %s', (JobID,))
+    db.get_db().commit()
+
+    # Return confirmation response
+    return make_response(f'Work experience with JobID {JobID} deleted successfully!', 200)
