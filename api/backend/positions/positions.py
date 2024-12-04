@@ -13,14 +13,12 @@ from backend.db_connection import db
 # routes.
 positions = Blueprint('positions', __name__)
 
-# Making a request given the blueprint
-# Looking at all available positions
+# request with filters to get positions with arbitrary WHERE clauses
 @positions.route('/positions', methods=['GET'])
 def get_positions():
     cursor = db.get_db().cursor()
     
-    # Get filter parameters from query string
-    # TO DO: Add correct filters
+    # usable filter params 
     filters = {
         'Location': request.args.get('Location'),
         'ExperienceRequired': request.args.get('ExperienceRequired'),
@@ -31,11 +29,11 @@ def get_positions():
         'StartUpName': request.args.get('StartUpName'),
     }
     
-    # Start with base query
+    # base query 
     query = 'SELECT * FROM positions WHERE 1=1'
     params = []
     
-    # Dynamically add filters if they're provided
+    # list of filters
     if filters['Location']:
         query += ' AND Location LIKE %s'
         params.append(f'%{filters["Location"]}%')
@@ -63,8 +61,7 @@ def get_positions():
     if filters['StartUpName']:
         query += ' AND StartUpName LIKE %s'
         params.append(f'%{filters["StartUpName"]}%')
-    
-    # Execute the query with any applied filters
+
     cursor.execute(query, tuple(params))
     theData = cursor.fetchall()
     
@@ -72,13 +69,10 @@ def get_positions():
     the_response.status_code = 200
     return the_response
 
-# Making a request given the blueprint
-# Creating a new position
-# TO DO: Add correct filters
+# POST new position request
 @positions.route('/positions', methods=['POST'])
 def create_position():
     try:
-        # Get the position details from the request body
         current_app.logger.info('Processing position creation request')
         position_details = request.json
         
@@ -114,7 +108,6 @@ def create_position():
             position_details['JobID']
         ))
         
-        # Commit the transaction
         db.get_db().commit()
         
         return_value = {
@@ -136,8 +129,7 @@ def create_position():
         }
         return make_response(jsonify(return_value), 500)
 
-# Making a request given the blueprint
-# Deleting a position
+# Deleting position from database
 @positions.route('/positions/<int:job_id>', methods=['DELETE'])
 def delete_position(job_id):
     try:
@@ -151,7 +143,6 @@ def delete_position(job_id):
             }
             return make_response(jsonify(return_value), 404)
         
-        # Commit the transaction
         db.get_db().commit()
         
         return_value = {
@@ -238,7 +229,6 @@ def update_position(job_id):
             }
             return make_response(jsonify(return_value), 404)
         
-        # Commit the transaction
         db.get_db().commit()
         
         return_value = {
