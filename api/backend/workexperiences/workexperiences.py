@@ -16,6 +16,7 @@ workexperiences = Blueprint('workexperiences', __name__)
 # Used by Alex to view candidate experience
 @workexperiences.route('/workexperiences/<StudentID>', methods=['GET'])
 def get_workexperiences(StudentID):
+    current_app.logger.info(f'GET /workexperiences/<StudentID> route for {StudentID}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT StudentID, StartDate, EndDate, JobID, Feedback 
                       FROM workexperiences 
@@ -30,6 +31,7 @@ def get_workexperiences(StudentID):
 # Used by Maddy and Jeff to create work experience entries
 @workexperiences.route('/workexperiences', methods=['POST'])
 def post_workexperience():
+    current_app.logger.info('POST /workexperiences route')
     work_info = request.json
     student_id = work_info['StudentID']
     start_date = work_info['StartDate']
@@ -50,6 +52,7 @@ def post_workexperience():
 # Used by Maddy and Jeff to keep work experience up to date
 @workexperiences.route('/workexperiences/<JobID>', methods=['PUT'])
 def update_workexperience(JobID):
+    current_app.logger.info(f'PUT /workexperiences/<JobID> route for {JobID}')
     work_info = request.json
     start_date = work_info.get('StartDate', None)
     end_date = work_info.get('EndDate', None)
