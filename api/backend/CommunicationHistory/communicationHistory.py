@@ -101,3 +101,45 @@ def update_message_types(student_id, old_type):
     the_response.status_code = 200
     return the_response
 
+# Delete a specific message or all messages for a student
+@communicationHistory.route('/communicationHistory/<int:student_id>', methods=['DELETE'])
+def delete_messages(student_id):
+    message_id = request.args.get('message_id', default=None)
+    cursor = db.get_db().cursor()
+    
+    if message_id:
+
+        query = '''
+        DELETE FROM CommunicationHistory
+        WHERE MessageID = %s
+        AND MessageID IN (
+            SELECT Communication 
+            FROM Student 
+            WHERE StudentID = %s
+        )
+        '''
+        cursor.execute(query, (message_id, student_id))
+    else:
+        query = '''
+        DELETE FROM CommunicationHistory
+        WHERE MessageID IN (
+            SELECT Communication 
+            FROM Student 
+            WHERE StudentID = %s
+        )
+        '''
+        cursor.execute(query, (student_id,))
+    
+
+    db.get_db().commit()
+    
+    response = {
+        "message": "Successfully deleted messages",
+        "student_id": student_id,
+        "message_id": message_id if message_id else "all"
+    }
+    
+    the_response = make_response(jsonify(response))
+    the_response.status_code = 200
+    return the_response
+
