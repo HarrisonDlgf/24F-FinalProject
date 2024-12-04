@@ -113,3 +113,24 @@ def post_feedback_for_student():
     cursor.execute(query, data)
     db.get_db().commit()
     return make_response('Feedback for student added successfully!', 201)
+
+#------------------------------------------------------------
+# Delete a specific feedback instance
+# Used by Maddy and Jeff to remove incorrect or outdated feedback
+@feedback.route('/feedback/<FeedbackID>', methods=['DELETE'])
+def delete_feedback(FeedbackID):
+    current_app.logger.info(f'DELETE /feedback/<FeedbackID> route for {FeedbackID}')
+    cursor = db.get_db().cursor()
+
+    # Check if the feedback exists before attempting deletion
+    cursor.execute('SELECT * FROM feedback WHERE FeedbackID = %s', (FeedbackID,))
+    feedback = cursor.fetchone()
+    if not feedback:
+        return make_response(f'Feedback with FeedbackID {FeedbackID} not found.', 404)
+
+    # Execute the delete operation
+    cursor.execute('DELETE FROM feedback WHERE FeedbackID = %s', (FeedbackID,))
+    db.get_db().commit()
+
+    # Return confirmation response
+    return make_response(f'Feedback with FeedbackID {FeedbackID} deleted successfully!', 200)
