@@ -45,3 +45,34 @@ def post_feedback():
     cursor.execute(query, data)
     db.get_db().commit()
     return make_response('Feedback added successfully!', 201)
+
+#------------------------------------------------------------
+# Edit feedback for a specific FeedbackID
+# Used by Maddy and Jeff after potential career growth
+@feedback.route('/feedback/<FeedbackID>', methods=['PUT'])
+def update_feedback(FeedbackID):
+    current_app.logger.info(f'PUT /feedback/<FeedbackID> route for {FeedbackID}')
+    feedback_info = request.json
+    feedback_text = feedback_info.get('FeedbackText', None)
+    posted_date = feedback_info.get('PostedDate', None)
+
+    # Build query dynamically based on provided fields
+    fields_to_update = []
+    data = []
+    if feedback_text:
+        fields_to_update.append('FeedbackText = %s')
+        data.append(feedback_text)
+    if posted_date:
+        fields_to_update.append('PostedDate = %s')
+        data.append(posted_date)
+
+    if not fields_to_update:
+        return make_response('No valid fields provided to update.', 400)
+
+    query = f'''UPDATE feedback SET {", ".join(fields_to_update)} 
+                WHERE FeedbackID = %s'''
+    data.append(FeedbackID)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, tuple(data))
+    db.get_db().commit()
+    return make_response('Feedback updated successfully!', 200)
