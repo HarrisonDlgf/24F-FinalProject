@@ -143,3 +143,29 @@ def delete_messages(student_id):
     the_response.status_code = 200
     return the_response
 
+#------------------------------------------------------------
+# Get all messages of a specific type for a student
+@communicationHistory.route('/communicationHistory/<int:student_id>/type/<string:message_type>', methods=['GET'])
+def get_messages_by_type(student_id, message_type):
+    current_app.logger.info(f'GET /communicationHistory/{student_id}/type/{message_type} route')
+    cursor = db.get_db().cursor()
+    
+    query = '''
+    SELECT * 
+    FROM CommunicationHistory
+    WHERE MessageType = %s
+    AND MessageID IN (
+        SELECT Communication 
+        FROM Student 
+        WHERE StudentID = %s
+    )
+    '''
+    cursor.execute(query, (message_type, student_id))
+    theData = cursor.fetchall()
+    
+    if not theData:
+        return make_response(jsonify({"message": f"No messages found for type '{message_type}' and student ID {student_id}."}), 404)
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
