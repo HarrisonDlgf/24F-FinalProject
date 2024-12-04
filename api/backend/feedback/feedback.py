@@ -17,6 +17,7 @@ feedback = Blueprint('feedback', __name__)
 # Used by David to analyze success rates
 @feedback.route('/feedback/<JobID>', methods=['GET'])
 def get_feedback(JobID):
+    current_app.logger.info(f'GET /feedback/<JobID> route for {JobID}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT Ratings, Comments, SubmittedBy, SubmittedFor, JobID, FeedbackID 
                       FROM feedback 
@@ -31,6 +32,7 @@ def get_feedback(JobID):
 # Used by Maddy and Jeff after completing internships
 @feedback.route('/feedback', methods=['POST'])
 def post_feedback():
+    current_app.logger.info('POST /feedback route')
     feedback_info = request.json
     ratings = feedback_info['Ratings']
     comments = feedback_info['Comments']
