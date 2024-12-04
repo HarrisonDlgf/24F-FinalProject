@@ -85,23 +85,33 @@ def create_position():
         cursor = db.get_db().cursor()
         cursor.execute('''
         INSERT INTO positions (
-            Location,
+            PositionTitle,
+            ContactEmail,
             ExperienceRequired,
-            Skills,
             Industry,
+            Location,
+            StartDate,
+            Skills,
             SalaryRange,
             PositionType,
-            StartUpName
+            StartUpName,
+            StartUpID,
+            JobID
         ) VALUES (
-            %s, %s, %s, %s, %s, %s, %s
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
         )''', (
-            position_details['Location'],
+            position_details['PositionTitle'],
+            position_details['ContactEmail'],
             position_details['ExperienceRequired'],
-            position_details['Skills'],
             position_details['Industry'],
+            position_details['Location'],
+            position_details['StartDate'],
+            position_details['Skills'],
             position_details['SalaryRange'],
             position_details['PositionType'],
-            position_details['StartUpName']
+            position_details['StartUpName'],
+            position_details['StartUpID'],
+            position_details['JobID']
         ))
         
         # Commit the transaction
@@ -168,26 +178,46 @@ def update_position(job_id):
         params = []
         
         # Build query dynamically based on provided fields
-        if 'title' in updates:
-            query_parts.append('title = %s')
-            params.append(updates['title'])
+        if 'PositionTitle' in updates:
+            query_parts.append('PositionTitle = %s')
+            params.append(updates['PositionTitle'])
             
-        if 'company' in updates:
-            query_parts.append('company = %s')
-            params.append(updates['company'])
+        if 'ContactEmail' in updates:
+            query_parts.append('ContactEmail = %s')
+            params.append(updates['ContactEmail'])
             
-        if 'location' in updates:
-            query_parts.append('location = %s')
-            params.append(updates['location'])
+        if 'ExperienceRequired' in updates:
+            query_parts.append('ExperienceRequired = %s')
+            params.append(updates['ExperienceRequired'])
             
-        if 'salary' in updates:
-            query_parts.append('salary = %s')
-            params.append(updates['salary'])
+        if 'Industry' in updates:
+            query_parts.append('Industry = %s')
+            params.append(updates['Industry'])
             
-        if 'description' in updates:
-            query_parts.append('description = %s')
-            params.append(updates['description'])
+        if 'Location' in updates:
+            query_parts.append('Location = %s')
+            params.append(updates['Location'])
             
+        if 'StartDate' in updates:
+            query_parts.append('StartDate = %s')
+            params.append(updates['StartDate'])
+            
+        if 'Skills' in updates:
+            query_parts.append('Skills = %s')
+            params.append(updates['Skills'])
+            
+        if 'SalaryRange' in updates:
+            query_parts.append('SalaryRange = %s')
+            params.append(updates['SalaryRange'])
+            
+        if 'PositionType' in updates:
+            query_parts.append('PositionType = %s')
+            params.append(updates['PositionType'])
+            
+        if 'StartUpName' in updates:
+            query_parts.append('StartUpName = %s')
+            params.append(updates['StartUpName'])
+        
         if not query_parts:
             return_value = {
                 'error': 'No valid fields provided for update'
