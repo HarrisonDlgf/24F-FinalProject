@@ -18,8 +18,8 @@ workexperiences = Blueprint('work experiences', __name__)
 def get_workexperiences():
 
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT id, company, last_name,
-                    first_name, job_title, business_phone FROM customers
+    cursor.execute('''SELECT StudentID, StartDate, EndDate,
+                    JobID, Feedback FROM workexperiences
     ''')
     
     theData = cursor.fetchall()
