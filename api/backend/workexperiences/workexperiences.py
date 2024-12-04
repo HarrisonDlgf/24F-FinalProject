@@ -96,3 +96,24 @@ def delete_workexperience(JobID):
 
     # Return confirmation response
     return make_response(f'Work experience with JobID {JobID} deleted successfully!', 200)
+
+    #------------------------------------------------------------
+# Get the most recent work experience of a specific StudentID
+# Used by Alex to view the latest experience for candidates
+@workexperiences.route('/workexperiences/<StudentID>/latest', methods=['GET'])
+def get_latest_workexperience(StudentID):
+    current_app.logger.info(f'GET /workexperiences/<StudentID>/latest route for {StudentID}')
+    cursor = db.get_db().cursor()
+    cursor.execute('''SELECT StudentID, StartDate, EndDate, JobID, Feedback 
+                      FROM workexperiences 
+                      WHERE StudentID = %s
+                      ORDER BY EndDate DESC
+                      LIMIT 1''', (StudentID,))
+    theData = cursor.fetchone()
+    
+    if not theData:
+        return make_response(f'No work experiences found for StudentID {StudentID}', 404)
+    
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
