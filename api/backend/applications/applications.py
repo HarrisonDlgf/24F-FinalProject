@@ -72,3 +72,38 @@ def delete_application(job_id):
     db.get_db().commit()
 
     return jsonify({"message": "Application deleted."}), 200
+
+# Return all under review applications
+@applications.route('/applications/under_review', methods=['GET'])
+def get_under_review():
+    cursor = db.get_db().cursor()
+    query = '''
+        SELECT *
+        FROM Applications
+        WHERE Status = 'UNDER REVIEW'
+    '''
+    cursor.execute(query)
+    theData = cursor.fetchall()
+
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
+
+# ========================== NEW ROUTES ============================= #
+# Based on STATUS, which is an ENUM
+# GET route, returns all applications based on status
+@applications.route('/applications/<string:status>', methods=['GET'])
+def get_applications_by_status(status):
+    cursor = db.get_db().cursor()
+    query = '''
+    SELECT *
+    FROM Applications
+    WHERE Status = %s
+    '''
+    cursor.execute(query, status)
+    applications = cursor.fetchall()
+
+    response = make_response(jsonify(applications))
+    response.status_code = 200
+    return response
+
