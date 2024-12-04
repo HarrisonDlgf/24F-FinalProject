@@ -107,3 +107,27 @@ def get_applications_by_status(status):
     response.status_code = 200
     return response
 
+# POST route, setting the value of status
+@applications.route('/applications/<string:status>', methods=['POST'])
+def set_status(status):
+    application_info = request.json
+    application_id = application_info['application_id']
+
+    cursor = db.get_db().cursor()
+    query = '''
+    UPDATE Applications
+    SET Status = %s
+    WHERE ApplicationID = %s
+    '''
+
+    cursor.execute(query, (status, application_id))
+    db.get_db().commit()
+
+    response = {
+        "message": f"Application {application_id} is now an updated status.",
+        "new_status": status
+    }
+
+    the_response = make_response(jsonify(response))
+    the_response.status_code = 200
+    return the_response
