@@ -131,3 +131,26 @@ def set_status(status):
     the_response = make_response(jsonify(response))
     the_response.status_code = 200
     return the_response
+
+# PUT route to reject an application 
+@applications.route('/applications/reject/<int:application_id>', methods=['PUT'])
+def reject_application(application_id):
+    cursor = db.get_db().cursor()
+    query = '''
+    UPDATE Applications
+    SET Status = 'REJECTED'
+    WHERE ApplicationID = %s
+    '''
+
+    cursor.execute(query, (application_id,))
+    db.get_db().commit()
+
+    response = {
+        "message": f"Application {application_id} has been rejected.",
+        "new_status": "REJECTED"
+    }
+
+    the_response = make_response(jsonify(response))
+    the_response.status_code = 200
+    return the_response
+
