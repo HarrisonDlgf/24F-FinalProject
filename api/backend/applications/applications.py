@@ -43,12 +43,12 @@ def submitting_app(jobID):
     INSERT INTO Applications (StudentID, JobID, SubmissionDate, Status)
     VALUES(%s, %s, %s, %s)
     ''')
-    cursor.execute(query, (student_id, job_id, submission_date, "UNDER REVIEW"))
+    cursor.execute(query, (student_id, jobID, submission_date, "UNDER REVIEW"))
     db.get_db().commit()
 
     response = {
         "message": "Application submitted.",
-        "job_id": job_id,
+        "job_id": jobID,
         "student_id": student_id,
         "status": "UNDER REVIEW"
     }
