@@ -65,3 +65,39 @@ def send_message(student_id):
     the_response = make_response(jsonify(response))
     the_response.status_code = 201
     return the_response
+
+# Update message types 
+@communicationHistory.route('/communicationHistory/<int:student_id>/type/<string:old_type>', methods=['PUT'])
+def update_message_types(student_id, old_type):
+    message_info = request.json
+    new_type = message_info.get('new_message_type')
+    
+    # Error handling
+    if not new_type:
+        return make_response(jsonify({"error": "new_message_type is required"}), 400)
+    
+    cursor = db.get_db().cursor()
+    query = '''
+    UPDATE CommunicationHistory
+    SET MessageType = %s
+    WHERE MessageID IN (
+        SELECT Communication 
+        FROM Student 
+        WHERE StudentID = %s
+    ) AND MessageType = %s
+    '''
+    cursor.execute(query, (new_type, student_id, old_type))
+    db.get_db().commit()
+    
+    
+    response = {
+        "message": "Successfully updated messages",
+        "student_id": student_id,
+        "old_type": old_type,
+        "new_type": new_type
+    }
+    
+    the_response = make_response(jsonify(response))
+    the_response.status_code = 200
+    return the_response
+
