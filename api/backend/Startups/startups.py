@@ -131,3 +131,49 @@ def delete_startup(StartupID):
         
     except Exception as e:
         return make_response(jsonify({"error": f"Error deleting startup: {str(e)}"}), 500)
+
+# Search for startups with optional filters
+@startups.route('/Startups/search', methods=['GET'])
+def search_startups():
+    try:
+        current_app.logger.info('Processing startup search request')
+        
+        # Get filter parameters from the query string
+        filters = {
+            'StartupName': request.args.get('StartupName'),
+            'IndustryID': request.args.get('IndustryID'),
+            'Location': request.args.get('Location'),
+            'Description': request.args.get('Description'),
+        }
+        
+        # Start with the base query
+        query = 'SELECT * FROM Startups WHERE 1=1'
+        params = []
+        
+        # Dynamically add filters
+        if filters['StartupName']:
+            query += ' AND StartupName LIKE %s'
+            params.append(f'%{filters["StartupName"]}%')
+        
+        if filters['IndustryID']:
+            query += ' AND IndustryID = %s'
+            params.append(filters['IndustryID'])
+        
+        if filters['Location']:
+            query += ' AND Location LIKE %s'
+            params.append(f'%{filters["Location"]}%')
+        
+        if filters['Description']:
+            query += ' AND Description LIKE %s'
+            params.append(f'%{filters["Description"]}%')
+        
+        # Execute the query
+        cursor = db.get_db().cursor()
+        cursor.execute(query, tuple(params))
+        theData = cursor.fetchall()
+        
+        return make_response(jsonify(theData), 200)
+        
+    except Exception as e:
+        return make_response(jsonify({"error": f"Error searching startups: {str(e)}"}), 500)
+
