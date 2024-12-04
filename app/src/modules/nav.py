@@ -14,7 +14,31 @@ def AboutPageNav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
 
-#### ------------------------ Examples for Role of pol_strat_advisor ------------------------
+#### ----------------------------- STARTUP ROLES -----------------------------
+
+## START CREATING PAGES FOR STARTUP ROLES
+def CareerCenterHomeNav():
+    st.sidebar.page_link(
+        "pages/00_Career_Center_Home.py", label="Career Center Home", icon="🎓"
+    )
+
+def FullTimeStudentHomeNav():
+    st.sidebar.page_link(
+        "pages/00_FullTime_Student_Home.py", label="Full Time Student Home", icon="🧑‍🎓👩‍🎓"
+    )
+
+def CoOpStudentHomeNav():
+    st.sidebar.page_link(
+        "pages/00_CoOp_Student_Home.py", label="Co-Op Student Home", icon="🌐"
+    )
+
+def StartupFounderHomeNav():
+    st.sidebar.page_link(
+        "pages/00_Startup_Founder_Home.py", label="Startup Founder Home", icon="🚀"
+    )
+
+
+#### ------------------------ OLD EXAMPLES ------------------------
 def PolStratAdvHomeNav():
     st.sidebar.page_link(
         "pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon="👤"
@@ -63,7 +87,7 @@ def SideBarLinks(show_home=False):
     """
 
     # add a logo to the sidebar always
-    st.sidebar.image("assets/logo.png", width=150)
+    st.sidebar.image("assets/startupConnectLogo.png", width=150)
 
     # If there is no logged in user, redirect to the Home (Landing) page
     if "authenticated" not in st.session_state:
