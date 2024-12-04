@@ -241,3 +241,79 @@ def update_position(job_id):
             'error': f'Error updating position: {str(e)}'
         }
         return make_response(jsonify(return_value), 500)
+
+# Replacing all details of a position
+@positions.route('/positions/<int:job_id>', methods=['PUT'])
+def replace_position(job_id):
+    try:
+        current_app.logger.info(f'Processing position replacement request for ID {job_id}')
+        new_position = request.json
+        
+        # Ensure all required fields are provided
+        required_fields = [
+            'PositionTitle', 'ContactEmail', 'ExperienceRequired', 
+            'Industry', 'Location', 'StartDate', 'Skills', 
+            'SalaryRange', 'PositionType', 'StartUpName', 'StartUpID'
+        ]
+        missing_fields = [field for field in required_fields if field not in new_position]
+        
+        if missing_fields:
+            return_value = {
+                'error': f'Missing required fields: {", ".join(missing_fields)}'
+            }
+            return make_response(jsonify(return_value), 400)
+        
+        # Replace the position details
+        query = '''
+        UPDATE positions 
+        SET 
+            PositionTitle = %s, 
+            ContactEmail = %s, 
+            ExperienceRequired = %s, 
+            Industry = %s, 
+            Location = %s, 
+            StartDate = %s, 
+            Skills = %s, 
+            SalaryRange = %s, 
+            PositionType = %s, 
+            StartUpName = %s, 
+            StartUpID = %s
+        WHERE JobID = %s
+        '''
+        params = (
+            new_position['PositionTitle'],
+            new_position['ContactEmail'],
+            new_position['ExperienceRequired'],
+            new_position['Industry'],
+            new_position['Location'],
+            new_position['StartDate'],
+            new_position['Skills'],
+            new_position['SalaryRange'],
+            new_position['PositionType'],
+            new_position['StartUpName'],
+            new_position['StartUpID'],
+            job_id
+        )
+        
+        cursor = db.get_db().cursor()
+        cursor.execute(query, params)
+        
+        if cursor.rowcount == 0:
+            return_value = {
+                'error': f'No position found with ID {job_id}'
+            }
+            return make_response(jsonify(return_value), 404)
+        
+        # Commit the transaction
+        db.get_db().commit()
+        
+        return_value = {
+            'message': f'Position {job_id} replaced successfully'
+        }
+        return make_response(jsonify(return_value), 200)
+        
+    except Exception as e:
+        return_value = {
+            'error': f'Error replacing position: {str(e)}'
+        }
+        return make_response(jsonify(return_value), 500)
