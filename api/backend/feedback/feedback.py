@@ -26,3 +26,22 @@ def get_feedback(JobID):
     the_response.status_code = 200
     return the_response
 
+#------------------------------------------------------------
+# Post feedback for a specific JobID
+# Used by Maddy and Jeff after completing internships
+@feedback.route('/feedback', methods=['POST'])
+def post_feedback():
+    current_app.logger.info('POST /feedback route')
+    feedback_info = request.json
+    job_id = feedback_info['JobID']
+    feedback_text = feedback_info['FeedbackText']
+    posted_date = feedback_info.get('PostedDate')  # Optional: Defaults to server timestamp in DB
+    student_id = feedback_info['StudentID']
+
+    query = '''INSERT INTO feedback (JobID, FeedbackText, PostedDate, StudentID)
+               VALUES (%s, %s, %s, %s)'''
+    data = (job_id, feedback_text, posted_date, student_id)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return make_response('Feedback added successfully!', 201)
