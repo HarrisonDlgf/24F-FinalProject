@@ -56,3 +56,19 @@ def submitting_app(jobID):
     the_response = make_response(jsonify(response))
     the_response.status_code = 201  
     return the_response
+
+# A Delete route for JobID in applications
+@applications.route('/applications/<int:job_id>', methods=['DELETE'])
+def delete_application(job_id):
+    application_info = request.json
+    student_id = application_info['student_id']
+
+    cursor = db.get_db().cursor()
+    query = '''
+        DELETE FROM Applications
+        WHERE StudentID = %s AND JobID = %s
+    '''
+    cursor.execute(query, (student_id, job_id))
+    db.get_db().commit()
+
+    return jsonify({"message": "Application deleted."}), 200
