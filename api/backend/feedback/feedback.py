@@ -13,12 +13,12 @@ feedback = Blueprint('feedback', __name__)
 
 #------------------------------------------------------------
 # Get all feedback instances for a specific JobID
-# Used by Jeff, Maddy, and David to view/analyze feedback
+# Used by Jeff and Maddy to see employee feedback
+# Used by David to analyze success rates
 @feedback.route('/feedback/<JobID>', methods=['GET'])
 def get_feedback(JobID):
-    current_app.logger.info(f'GET /feedback/<JobID> route for {JobID}')
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT FeedbackID, JobID, FeedbackText, PostedDate, StudentID 
+    cursor.execute('''SELECT Ratings, Comments, SubmittedBy, SubmittedFor, JobID, FeedbackID 
                       FROM feedback 
                       WHERE JobID = %s''', (JobID,))
     theData = cursor.fetchall()
@@ -31,16 +31,16 @@ def get_feedback(JobID):
 # Used by Maddy and Jeff after completing internships
 @feedback.route('/feedback', methods=['POST'])
 def post_feedback():
-    current_app.logger.info('POST /feedback route')
     feedback_info = request.json
+    ratings = feedback_info['Ratings']
+    comments = feedback_info['Comments']
+    submitted_by = feedback_info['SubmittedBy']
+    submitted_for = feedback_info['SubmittedFor']
     job_id = feedback_info['JobID']
-    feedback_text = feedback_info['FeedbackText']
-    posted_date = feedback_info.get('PostedDate')  # Optional: Defaults to server timestamp in DB
-    student_id = feedback_info['StudentID']
 
-    query = '''INSERT INTO feedback (JobID, FeedbackText, PostedDate, StudentID)
-               VALUES (%s, %s, %s, %s)'''
-    data = (job_id, feedback_text, posted_date, student_id)
+    query = '''INSERT INTO feedback (Ratings, Comments, SubmittedBy, SubmittedFor, JobID)
+               VALUES (%s, %s, %s, %s, %s)'''
+    data = (ratings, comments, submitted_by, submitted_for, job_id)
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
@@ -53,19 +53,19 @@ def post_feedback():
 def update_feedback(FeedbackID):
     current_app.logger.info(f'PUT /feedback/<FeedbackID> route for {FeedbackID}')
     feedback_info = request.json
-    feedback_text = feedback_info.get('FeedbackText', None)
-    posted_date = feedback_info.get('PostedDate', None)
+    ratings = feedback_info.get('Ratings', None)
+    comments = feedback_info.get('Comments', None)
 
     # Build query dynamically based on provided fields
     fields_to_update = []
     data = []
-    if feedback_text:
-        fields_to_update.append('FeedbackText = %s')
-        data.append(feedback_text)
-    if posted_date:
-        fields_to_update.append('PostedDate = %s')
-        data.append(posted_date)
-
+    if ratings:
+        fields_to_update.append('Ratings = %s')
+        data.append(ratings)
+    if comments:
+        fields_to_update.append('Comments = %s')
+        data.append(comments)
+    
     if not fields_to_update:
         return make_response('No valid fields provided to update.', 400)
 
