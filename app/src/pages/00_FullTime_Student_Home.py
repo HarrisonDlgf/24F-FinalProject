@@ -15,7 +15,7 @@ st.write('### What would you like to do today?')
 
 # PAGES ARE TO BE MADE - JUST PLACEHOLDERS FOR NOW
 if st.button('Track Application Status', type='primary', use_container_width=True):
-    st.switch_page('pages/02_Application_Status.py')
+    st.switch_page('pages/01_Position_List.py')
 
 if st.button('View Full-Time Job Opportunities', 
              type='primary',
