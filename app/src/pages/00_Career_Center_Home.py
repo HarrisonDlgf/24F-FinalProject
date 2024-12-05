@@ -14,12 +14,17 @@ st.write('')
 st.write('')
 st.write('### What would you like to do today?')
 
-if st.button('View World Bank Data Visualization', 
+if st.button('View Career Center Analytics', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+    st.switch_page('pages/01_Career_Center_Analytics.py')
 
-if st.button('View World Map Demo', 
+if st.button('Student Communications Dashboard', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+    st.switch_page('pages/02_Career_Center_Comms.py')
+
+if st.button('Job Placement Tracking', 
+             type='primary',
+             use_container_width=True):
+    st.switch_page('pages/03_Job_Placement.py')

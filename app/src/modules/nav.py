@@ -14,22 +14,28 @@ def AboutPageNav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
 
-#### ------------------------ Examples for Role of pol_strat_advisor ------------------------
-def PolStratAdvHomeNav():
+#### ----------------------------- STARTUP ROLES -----------------------------
+
+## START CREATING PAGES FOR STARTUP ROLES
+def CareerCenterHomeNav():
     st.sidebar.page_link(
-        "pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon="👤"
+        "pages/00_Career_Center_Home.py", label="Career Center Home", icon="🎓"
     )
 
-
-def WorldBankVizNav():
+def FullTimeStudentHomeNav():
     st.sidebar.page_link(
-        "pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon="🏦"
+        "pages/00_FullTime_Student_Home.py", label="Full Time Student Home", icon="🧑‍🎓👩‍🎓"
     )
 
+def CoOpStudentHomeNav():
+    st.sidebar.page_link(
+        "pages/00_CoOp_Student_Home.py", label="Co-Op Student Home", icon="🌐"
+    )
 
-def MapDemoNav():
-    st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon="🗺️")
-
+def StartupFounderHomeNav():
+    st.sidebar.page_link(
+        "pages/00_Startup_Founder_Home.py", label="Startup Founder Home", icon="🚀"
+    )
 
 ## ------------------------ Examples for Role of usaid_worker ------------------------
 def ApiTestNav():
@@ -63,7 +69,7 @@ def SideBarLinks(show_home=False):
     """
 
     # add a logo to the sidebar always
-    st.sidebar.image("assets/logo.png", width=150)
+    st.sidebar.image("assets/startupConnectLogo.png", width=150)
 
     # If there is no logged in user, redirect to the Home (Landing) page
     if "authenticated" not in st.session_state:
@@ -73,23 +79,28 @@ def SideBarLinks(show_home=False):
     if show_home:
         # Show the Home page link (the landing page)
         HomeNav()
-
+    else:
+        HomeNav()
     # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
+        
+        # Career Center role
+        if st.session_state["role"] == "career_center":
+            CareerCenterHomeNav()
 
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
-        if st.session_state["role"] == "pol_strat_advisor":
-            PolStratAdvHomeNav()
-            WorldBankVizNav()
-            MapDemoNav()
+        # Full Time Student role
+        if st.session_state["role"] == "fulltime_student":
+            FullTimeStudentHomeNav()
 
-        # If the user role is usaid worker, show the Api Testing page
-        if st.session_state["role"] == "usaid_worker":
-            PredictionNav()
-            ApiTestNav()
-            ClassificationNav()
+        # Co-Op Student role
+        if st.session_state["role"] == "coop_student":
+            CoOpStudentHomeNav()
 
-        # If the user is an administrator, give them access to the administrator pages
+        # Startup Founder role
+        if st.session_state["role"] == "startup_founder":
+            StartupFounderHomeNav()
+
+        # Administrator role (keeping this one)
         if st.session_state["role"] == "administrator":
             AdminPageNav()
 
