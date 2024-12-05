@@ -3,7 +3,7 @@ import requests
 from datetime import datetime
 
 # Configuration
-API_BASE_URL = "http://api:4000"
+API_BASE_URL = "http://web-api:4000"
 st.set_page_config(layout="wide", page_title="Available Positions")
 
 # Custom CSS for the position cards
