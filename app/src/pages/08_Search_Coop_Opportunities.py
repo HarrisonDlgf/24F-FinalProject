@@ -12,7 +12,7 @@ def search_coop_opportunities():
     # Search button
     if st.button("Search"):
         # URL for the Flask API
-        url = "http://localhost:5000/positions"
+        url = "http://localhost:4000/positions"
 
         # Query parameters
         params = {}
