@@ -27,7 +27,7 @@ def upload_resume():
         data = {"user_id": user_id, "notes": additional_notes}
 
         # Make POST request to backend
-        url = "http://localhost:5000/api/upload_resume"
+        url = "http://localhost:4000/api/upload_resume"
         try:
             response = requests.post(url, files={"file": resume_file}, data=data, timeout=10)
             if response.status_code == 201:

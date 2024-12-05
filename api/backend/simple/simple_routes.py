@@ -19,16 +19,6 @@ def welcome():
     return response
 
 # ------------------------------------------------------------
-# /playlist returns the sample playlist data contained in playlist.py
-# (imported above)
-@simple_routes.route('/playlist')
-def get_playlist_data():
-    current_app.logger.info('GET /playlist handler')
-    response = make_response(jsonify(sample_playlist_data))
-    response.status_code = 200
-    return response
-
-# ------------------------------------------------------------
 @simple_routes.route('/niceMesage', methods = ['GET'])
 def affirmation():
     message = '''
