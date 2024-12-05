@@ -17,7 +17,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     # Get all positions for filter
-    response = requests.get('http://localhost:4000/api/positions')
+    response = requests.get('http://api:4000/positions')
     positions = response.json() if response.status_code == 200 else []
     position_types = set(pos.get('PositionType', '') for pos in positions)
     selected_type = st.selectbox('Filter by Position Type', ['All Types'] + list(position_types))
@@ -29,16 +29,16 @@ with col2:
 try:
     # status is an ENUM so try each 
     if selected_status == 'UNDER REVIEW':
-        response = requests.get('http://localhost:4000/api/applications/under_review')
+        response = requests.get('http://api:4000/applications/under_review')
         applications = response.json() if response.status_code == 200 else []
     elif selected_status != 'All Statuses':
-        response = requests.get(f'http://localhost:4000/api/applications/{selected_status}')
+        response = requests.get(f'http://api:4000/applications/{selected_status}')
         applications = response.json() if response.status_code == 200 else []
     else:
         # Get all applications for each position
         applications = []
         for position in positions:
-            response = requests.get(f'http://localhost:4000/api/applications/{position["JobID"]}')
+            response = requests.get(f'http://api:4000/applications/{position["JobID"]}')
             if response.status_code == 200:
                 applications.extend(response.json())
 
@@ -79,7 +79,7 @@ try:
             selected_rows = st.multiselect("Select Applications", df['ApplicationID'].tolist())
             for app_id in selected_rows:
                 response = requests.post(
-                    f'http://localhost:4000/api/applications/ACCEPTED',
+                    f'http://api:4000/applications/ACCEPTED',
                     json={'application_id': app_id}
                 )
                 if response.status_code == 200:
@@ -90,7 +90,7 @@ try:
         if st.button("Reject Selected Applications"):
             selected_rows = st.multiselect("Select Applications to Reject", df['ApplicationID'].tolist())
             for app_id in selected_rows:
-                response = requests.put(f'http://localhost:4000/api/applications/reject/{app_id}')
+                response = requests.put(f'http://api:4000/applications/reject/{app_id}')
                 if response.status_code == 200:
                     st.success(f"Application {app_id} rejected successfully!")
                 else:
