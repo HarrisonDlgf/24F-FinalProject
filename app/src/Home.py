@@ -56,7 +56,7 @@ if st.button("Act as Jeff, a Second Year searching for a startup to join",
     # finally, we ask streamlit to switch to another page, in this case, the 
     # landing page for this particular user type
     logger.info("Logging in as Jeff, a Second Year Undergraduate searching for a startup to join")
-    st.switch_page('pages/00_Student_Home.py')
+    st.switch_page('pages/00_CoOp_Student_Home.py')
 
 # Maddy, senior at NEU searching for a full-time job
 if st.button('Act as Maddy, a senior at NEU searching for a full-time job', 
