@@ -59,7 +59,7 @@ if st.button("Act as Jeff, a Second Year searching for a startup to join",
     st.switch_page('pages/00_Student_Home.py')
 
 # Maddy, senior at NEU searching for a full-time job
-if st.button('Act as Maddy, a senior at NEU searching for a full-timejob', 
+if st.button('Act as Maddy, a senior at NEU searching for a full-time job', 
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
