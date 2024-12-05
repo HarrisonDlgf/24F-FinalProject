@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS Startups (
     StartupID INTEGER PRIMARY KEY NOT NULL,
     Name varchar(75) NOT NULL,
     WebsiteURL varchar(100) NOT NULL,
-    Rating float(1,1) NOT NULL,
+    Rating float(2,1) NOT NULL,
     FundingStage varchar(75) NOT NULL,
     IndustryID INTEGER NOT NULL,
     Communication INTEGER NOT NULL,
