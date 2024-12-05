@@ -24,21 +24,67 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Sidebar filters
+# Get unique values for each filter field
+def get_filter_options():
+    try:
+        response = requests.get(f"{API_BASE_URL}/positions")
+        if response.status_code == 200:
+            positions = response.json()
+            return {
+                "Location": sorted(list(set(p["Location"] for p in positions))),
+                "Industry": sorted(list(set(p["Industry"] for p in positions))),
+                "PositionType": sorted(list(set(p["PositionType"] for p in positions))),
+                "ExperienceRequired": sorted(list(set(p["ExperienceRequired"] for p in positions))),
+                "Skills": sorted(list(set(p["Skills"] for p in positions))),
+                "SalaryRange": sorted(list(set(p["SalaryRange"] for p in positions))),
+                "StartUpName": sorted(list(set(p["StartUpName"] for p in positions)))
+            }
+    except Exception as e:
+        st.error(f"Error loading filter options: {str(e)}")
+        return {}
+
+# Get filter options
+filter_options = get_filter_options()
+
+# Sidebar filters with dropdowns
 with st.sidebar:
     st.header("Filter Positions")
     filters = {
-        "PositionTitle": st.text_input("Position Title"),
-        "StartUpName": st.text_input("StartUp Name"),
-        "Location": st.text_input("Location"),
-        "Industry": st.text_input("Industry"),
+        "Location": st.selectbox(
+            "Location",
+            options=[""] + filter_options.get("Location", []),
+            key="location_filter"
+        ),
+        "Industry": st.selectbox(
+            "Industry",
+            options=[""] + filter_options.get("Industry", []),
+            key="industry_filter"
+        ),
         "PositionType": st.selectbox(
             "Position Type",
-            options=["", "Full-time", "Part-time", "Internship"]
+            options=[""] + filter_options.get("PositionType", []),
+            key="position_type_filter"
         ),
-        "ExperienceRequired": st.text_input("Experience Required"),
-        "Skills": st.text_input("Skills"),
-        "SalaryRange": st.text_input("Salary Range")
+        "ExperienceRequired": st.selectbox(
+            "Experience Required",
+            options=[""] + filter_options.get("ExperienceRequired", []),
+            key="experience_filter"
+        ),
+        "Skills": st.selectbox(
+            "Skills",
+            options=[""] + filter_options.get("Skills", []),
+            key="skills_filter"
+        ),
+        "SalaryRange": st.selectbox(
+            "Salary Range",
+            options=[""] + filter_options.get("SalaryRange", []),
+            key="salary_filter"
+        ),
+        "StartUpName": st.selectbox(
+            "StartUp Name",
+            options=[""] + filter_options.get("StartUpName", []),
+            key="startup_filter"
+        )
     }
 
 def load_positions(filters=None):
