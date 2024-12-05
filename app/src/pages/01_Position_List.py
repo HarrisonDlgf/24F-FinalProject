@@ -3,6 +3,7 @@ import requests
 from datetime import datetime
 
 # Configuration
+API_BASE_URL = "http://api:4000"
 st.set_page_config(layout="wide", page_title="Available Positions")
 
 # Custom CSS for the position cards
@@ -26,51 +27,57 @@ st.markdown("""
 # Sidebar filters
 with st.sidebar:
     st.header("Filter Positions")
-    location = st.text_input("Location")
-    industry = st.text_input("Industry")
-    position_type = st.selectbox(
-        "Position Type",
-        options=["", "Full-time", "Part-time", "Internship"],
-    )
-    experience = st.text_input("Experience Required")
-    skills = st.text_input("Skills")
-    
-    if st.button("Apply Filters"):
-        filters = {
-            "Location": location,
-            "Industry": industry,
-            "PositionType": position_type,
-            "ExperienceRequired": experience,
-            "Skills": skills
-        }
-        st.session_state.positions = load_positions(filters)
-
-# Main content area
-st.title("Available Positions")
+    filters = {
+        "PositionTitle": st.text_input("Position Title"),
+        "StartUpName": st.text_input("StartUp Name"),
+        "Location": st.text_input("Location"),
+        "Industry": st.text_input("Industry"),
+        "PositionType": st.selectbox(
+            "Position Type",
+            options=["", "Full-time", "Part-time", "Internship"]
+        ),
+        "ExperienceRequired": st.text_input("Experience Required"),
+        "Skills": st.text_input("Skills"),
+        "SalaryRange": st.text_input("Salary Range")
+    }
 
 def load_positions(filters=None):
     try:
         response = requests.get(f"{API_BASE_URL}/positions", params=filters)
-        return response.json() if response.status_code == 200 else []
+        if response.status_code == 200:
+            return response.json()
+        else:
+            st.error(f"Error loading positions: {response.text}")
+            return []
     except Exception as e:
-        st.error(f"Error loading positions: {str(e)}")
+        st.error(f"Error connecting to server: {str(e)}")
         return []
 
+# Load initial positions or filtered positions
+if st.sidebar.button("Apply Filters"):
+    positions = load_positions(filters)
+else:
+    positions = load_positions()
+
+# Main content area
+st.title("Available Positions")
+
 # Display positions as clickable cards
-positions = load_positions()
-for position in positions:
-    col1, col2 = st.columns([4, 1])
-    with col1:
-        if st.button(
-            f"📋 {position['PositionTitle']}\n"
-            f"🏢 {position['StartUpName']}\n"
-            f"📍 {position['Location']}",
-            key=f"pos_{position['JobID']}"
-        ):
-            # Store position ID in session state and redirect
-            st.session_state.selected_position_id = position['JobID']
-            st.switch_page("pages/02_Position_Detail.py")
-    
-    with col2:
-        st.write(f"Posted: {position['StartDate']}")
-    st.markdown("---") 
+if positions:
+    for position in positions:
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            if st.button(
+                f"📋 {position['PositionTitle']}\n"
+                f"🏢 {position['StartUpName']}\n"
+                f"📍 {position['Location']}",
+                key=f"pos_{position['JobID']}"
+            ):
+                st.session_state.selected_position_id = position['JobID']
+                st.switch_page("pages/02_Position_Detail.py")
+        
+        with col2:
+            st.write(f"Posted: {position['StartDate']}")
+        st.markdown("---")
+else:
+    st.info("No positions found matching your criteria.") 
