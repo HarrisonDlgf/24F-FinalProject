@@ -1,5 +1,7 @@
 import requests
 import streamlit as st
+from modules.nav import SideBarLinks
+
 
 def search_coop_opportunities():
     st.title("Search for Co-op Opportunities")
