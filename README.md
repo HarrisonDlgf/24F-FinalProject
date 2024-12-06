@@ -7,6 +7,14 @@ This repo is a semester project for Database Management. We are creating a platf
 StartUpConnect helps Northeastern take its experiential learning to the next level by
 connecting the relevant people to actual startups that need help. By matching students with startups based on their skills, co-op cycle, and what industries they want to enter, StartUpConnect facilitates connections and helps more students get hired at co-op experiences they want to do!
 
+## Introduction
+Team Name: StartUpConnectors
+Team Members:
+    Harrison Dolgoff - dolgoff.h@northeastern.edu
+    Jack Harmeling - harmeling.j@northeastern.edu
+    Rohan Francis - francis.r@northeastern.edu
+    Nicolas Ignaszewski - ignaszewski.n@northeastern.edu
+
 ## Key Components
 - Student-startup matching based on skills and availability.
 - Career center analytics for placement success, industry trends, and personalized help.
@@ -33,12 +41,6 @@ The backend is built using Flask and can be broken down into each user persona:
 The front end is built using Streamlit
 - Provides dashboards for different types of users (personas)
 - Interacts with the back-end to query real time results
-
-## Contributions
-- Harrison Dolgoff
-- Jack Harmeling
-- Rohan Francis
-- Nicolas Ignaszewski
 
 ## Demo Video
 - Here is a walkthrough on the project [here](URL)
