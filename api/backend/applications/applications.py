@@ -89,7 +89,7 @@ def get_under_review():
     the_response.status_code = 200
     return the_response
 
-# ========================== NEW ROUTES ============================= #
+
 # Based on STATUS, which is an ENUM
 # GET route, returns all applications based on status
 @applications.route('/applications/<string:status>', methods=['GET'])
