@@ -35,7 +35,7 @@ with tab1:
                 "JobID": job_id
             }
             try:
-                response = requests.post("http://api:4000/feedback", json=feedback_data)
+                response = requests.post("http://localhost:4000/feedback", json=feedback_data)
                 if response.status_code == 201:
                     st.success("Feedback submitted successfully!")
                 else:
@@ -66,7 +66,7 @@ with tab1:
             }
             try:
                 response = requests.post(
-                    "http://api:4000/feedback/student", json=feedback_data
+                    "http://localhost:4000/feedback/student", json=feedback_data
                 )
                 if response.status_code == 201:
                     st.success("Feedback submitted successfully!")
@@ -95,7 +95,7 @@ with tab2:
         job_id = st.number_input("Enter Job ID:", min_value=1, step=1)
         if st.button("Fetch Feedback"):
             try:
-                response = requests.get(f"http://api:4000/feedback/{job_id}")
+                response = requests.get(f"http://localhost:4000/feedback/{job_id}")
                 if response.status_code == 200:
                     data = response.json()
                     if data:
@@ -113,7 +113,7 @@ with tab2:
         student_id = st.text_input("Enter Student ID:")
         if st.button("Fetch Feedback for Student"):
             try:
-                response = requests.get(f"http://api:4000/feedback/student/{student_id}")
+                response = requests.get(f"http://localhost:4000/feedback/student/{student_id}")
                 if response.status_code == 200:
                     data = response.json()
                     if data:
@@ -140,7 +140,7 @@ with tab2:
                     "Comments": new_comments if new_comments else None
                 }
                 try:
-                    response = requests.put(f"http://api:4000/feedback/{job_id}", json=feedback_update)
+                    response = requests.put(f"http://localhost:4000/feedback/{job_id}", json=feedback_update)
                     if response.status_code == 200:
                         st.success("Feedback updated successfully!")
                     else:
@@ -156,7 +156,7 @@ with tab2:
                 st.error("Provide a Feedback ID to delete.")
             else:
                 try:
-                    response = requests.delete(f"http://api:4000/feedback/{feedback_id}")
+                    response = requests.delete(f"http://localhost:4000/feedback/{feedback_id}")
                     if response.status_code == 200:
                         st.success("Feedback deleted successfully!")
                     else:

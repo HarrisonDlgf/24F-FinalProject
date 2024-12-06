@@ -33,7 +33,7 @@ with tab2:
     st.header("Industry Distribution")
     # Fetch industry data
     try:
-        response = requests.get('http://api:4000/positions')
+        response = requests.get('http://localhost:4000/positions')
         positions = response.json()
         
         # Process data for visualization
@@ -44,7 +44,8 @@ with tab2:
         fig = px.pie(values=industry_counts.values, names=industry_counts.index)
         st.plotly_chart(fig)
     except:
-        st.error("Unable to fetch industry data")
+        # st.error("Unable to fetch industry data")
+        st.error(response.json())
 
 with tab3:
     st.header("Salary Range Distribution")

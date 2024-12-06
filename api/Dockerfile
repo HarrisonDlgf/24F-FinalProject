@@ -1,13 +1,14 @@
 FROM python:3.11-slim
 
-WORKDIR /apicode
+# USED TO BE RUN mkdir /apicode
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
+COPY . /usr/src/app/
 
 EXPOSE 4000
 
-CMD [ "python", "backend_app.py"]
+RUN pip install -r requirements.txt
+
+CMD ["python", "app.py"]
 
