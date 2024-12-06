@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication) 
 VALUES (1, 'Emily Johnson', 'Boston, MA', 'Previous co-op', 'US Citizen', 85, 10);
 

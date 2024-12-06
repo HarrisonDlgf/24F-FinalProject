@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
 VALUES (1, 'Data Scientist', 'johndoe@example.com', '3-5 years', 'Technology', 'Boston, MA', '2024-10-10', 'Python, Data Analysis', '$80,000-$100,000', 'Full-time', 1);
 

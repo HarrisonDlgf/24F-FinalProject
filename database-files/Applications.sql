@@ -1,5 +1,7 @@
-INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (1, 12, 5, '2023-05-03 12:34:56');
-INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (2, 4, 20, '2023-09-15 09:45:12');
+USE StartUpConnect;
+
+INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (1, 7, 5, '2023-05-03 12:34:56');
+INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (2, 7, 20, '2023-09-15 09:45:12');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (3, 18, 30, '2023-03-10 14:56:45');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (4, 25, 8, '2023-08-22 16:23:11');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (5, 7, 15, '2023-12-01 08:11:34');
@@ -81,7 +83,7 @@ INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUE
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (81, 21, 13, '2023-07-29 17:12:44');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (82, 24, 14, '2023-03-22 11:50:29');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (83, 9, 22, '2023-06-14 13:34:09');
-INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (84, 18, 19, '2023-05-12 08:22:18');
+INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (84, 7, 19, '2023-05-12 08:22:18');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (85, 14, 30, '2023-11-15 14:03:45');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (86, 28, 7, '2023-10-25 09:56:09');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (87, 12, 11, '2023-02-27 16:45:22');
@@ -90,7 +92,7 @@ INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUE
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (90, 17, 12, '2023-09-02 10:45:29');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (91, 4, 28, '2023-11-09 12:45:09');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (92, 18, 7, '2023-09-13 09:34:12');
-INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (93, 13, 26, '2023-08-21 15:12:45');
+INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (93, 7, 26, '2023-08-21 15:12:45');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (94, 21, 20, '2023-07-19 14:56:18');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (95, 10, 1, '2023-12-15 09:22:33');
 INSERT INTO Applications (ApplicationID, StudentID, JobID, SubmissionDate) VALUES (96, 27, 15, '2023-04-25 17:31:29');

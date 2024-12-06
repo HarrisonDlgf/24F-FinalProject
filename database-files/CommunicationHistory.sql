@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO CommunicationHistory (MessageID, MessageType, Timestamp, MessageContent) VALUES (1, 'Follow-up', '2023-07-04', 'When is the deadline for project submission?');
 INSERT INTO CommunicationHistory (MessageID, MessageType, Timestamp, MessageContent) VALUES (2, 'Inquiry', '2023-02-05', 'When is the deadline for project submission?');
 INSERT INTO CommunicationHistory (MessageID, MessageType, Timestamp, MessageContent) VALUES (3, 'Response', '2024-08-03', 'Your request has been escalated to our support team.');

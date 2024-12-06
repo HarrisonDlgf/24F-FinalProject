@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO JobListingSkills (SkillsID, JobID) VALUES (12, 8);
 INSERT INTO JobListingSkills (SkillsID, JobID) VALUES (3, 15);
 INSERT INTO JobListingSkills (SkillsID, JobID) VALUES (7, 22);

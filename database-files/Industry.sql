@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO Industry (IndustryID, IndustryName, Description) 
 VALUES (1, 'Major Pharmaceuticals', 'Development and manufacturing of medical drugs and vaccines.');
 
