@@ -1,9 +1,24 @@
 import requests
 import streamlit as st
+import os
+from dotenv import load_dotenv
 
 
 def search_coop_opportunities():
+    # Load environment variables
+    load_dotenv()
+    API_URL = os.getenv('API_URL', 'http://localhost:4000')
+
     st.title("Search for Co-op Opportunities")
+
+    # Display API connection status
+    try:
+        requests.get(f"{API_URL}/", timeout=5)
+        st.success("✅ Connected to API server")
+    except requests.exceptions.RequestException:
+        st.error("❌ Cannot connect to API server. Please ensure the backend server is running on " + API_URL)
+        st.info("To fix this:\n1. Make sure the Flask backend is running\n2. Verify the API_URL in your .env file\n3. Check if the port 4000 is available")
+        return
 
     # Input fields for user query
     keyword = st.text_input("Enter a keyword (e.g., 'Data Analyst')", "")
@@ -11,8 +26,8 @@ def search_coop_opportunities():
 
     # Search button
     if st.button("Search"):
-        # URL for the Flask API
-        url = "http://localhost:4000/positions"
+        # Update URL to use environment variable
+        url = f"{API_URL}/positions"
 
         # Query parameters
         params = {}
