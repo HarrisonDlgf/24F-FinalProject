@@ -16,58 +16,27 @@ positions = Blueprint('positions', __name__)
 # request with filters to get positions with arbitrary WHERE clauses
 @positions.route('/', methods=['GET'])
 def get_positions():
-    cursor = db.get_db().cursor()
-    
-    # usable filter params 
-    filters = {
-        'Location': request.args.get('Location'),
-        'ExperienceRequired': request.args.get('ExperienceRequired'),
-        'Skills': request.args.get('Skills'),
-        'Industry': request.args.get('Industry'),
-        'SalaryRange': request.args.get('SalaryRange'),
-        'PositionType': request.args.get('PositionType'),
-        'StartUpName': request.args.get('StartUpName'),
-    }
-    
-    # base query 
-    query = 'SELECT * FROM positions WHERE 1=1'
-    params = []
-    
-    # list of filters
-    if filters['Location']:
-        query += ' AND Location LIKE %s'
-        params.append(f'%{filters["Location"]}%')
+    try:
+        cursor = db.get_db().cursor()
         
-    if filters['ExperienceRequired']:
-        query += ' AND ExperienceRequired LIKE %s'
-        params.append(f'%{filters["ExperienceRequired"]}%')
+        # base query 
+        query = 'SELECT * FROM Positions WHERE 1=1'
+        params = []
         
-    if filters['Skills']:
-        query += ' AND salary >= %s'
-        params.append(filters['min_salary'])
+        cursor.execute(query, tuple(params))
+        theData = cursor.fetchall()
         
-    if filters['Industry']:
-        query += ' AND Industry LIKE %s'
-        params.append(f'%{filters["Industry"]}%')
-
-    if filters['SalaryRange']: 
-        query += ' AND SalaryRange LIKE %s'
-        params.append(f'%{filters["SalaryRange"]}%')    
+        the_response = make_response(jsonify(theData))
+        the_response.status_code = 200
+        return the_response
         
-    if filters['PositionType']:
-        query += ' AND PositionType LIKE %s'
-        params.append(f'%{filters["PositionType"]}%')
-        
-    if filters['StartUpName']:
-        query += ' AND StartUpName LIKE %s'
-        params.append(f'%{filters["StartUpName"]}%')
-
-    cursor.execute(query, tuple(params))
-    theData = cursor.fetchall()
-    
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
+    except Exception as e:
+        # Log the full error details
+        current_app.logger.error(f"Error in get_positions: {str(e)}")
+        return jsonify({
+            "error": str(e),
+            "message": "Failed to fetch positions"
+        }), 500
 
 # POST new position request
 @positions.route('/', methods=['POST'])

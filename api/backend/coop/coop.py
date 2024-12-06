@@ -9,7 +9,7 @@ coop = Blueprint("coop", __name__)
 
 
 # PUT: Update an existing co-op record
-@coop_bp.route("/api/coop_updates/<int:coop_id>", methods=["PUT"])
+@coop.route("/api/coop_updates/<int:coop_id>", methods=["PUT"])
 def update_coop(coop_id):
     try:
         # Retrieve the update data from the request
@@ -57,7 +57,7 @@ def update_coop(coop_id):
         conn.close()
 
 # POST: Create a new co-op
-@coop_bp.route("/api/coop_updates", methods=["POST"])
+@coop.route("/api/coop_updates", methods=["POST"])
 def create_coop():
     try:
         # Retrieve co-op details from the request
@@ -89,7 +89,7 @@ def create_coop():
         conn.close()
 
 # DELETE: Delete a co-op by ID
-@coop_bp.route("/api/coop_updates/<int:coop_id>", methods=["DELETE"])
+@coop.route("/api/coop_updates/<int:coop_id>", methods=["DELETE"])
 def delete_coop(coop_id):
     try:
         # Delete the co-op from the database
@@ -112,7 +112,7 @@ def delete_coop(coop_id):
         conn.close()
 
 # GET: Retrieve a co-op by ID
-@coop_bp.route("/api/coop_updates/<int:coop_id>", methods=["GET"])
+@coop.route("/api/coop_updates/<int:coop_id>", methods=["GET"])
 def get_coop(coop_id):
     try:
         # Fetch the co-op details from the database
@@ -135,7 +135,7 @@ def get_coop(coop_id):
         conn.close()
 
 # GET: Retrieve all co-ops
-@coop_bp.route("/api/coop_updates", methods=["GET"])
+@coop.route("/api/coop_updates", methods=["GET"])
 def get_all_coops():
     try:
         # Fetch all co-ops from the database
@@ -153,13 +153,3 @@ def get_all_coops():
     finally:
         cursor.close()
         conn.close()
-
-        # Check if the record was updated
-        if cursor.rowcount == 0:
-            return jsonify({"error": f"No Co-op found with ID {coop_id}"}), 404
-
-        conn.commit()
-        return jsonify({"message": f"Co-op {coop_id} updated successfully"}), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500

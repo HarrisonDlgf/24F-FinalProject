@@ -9,13 +9,15 @@ services:
     ports:
       - "4000:4000"  
     depends_on:
-      - db 
+      - mysql_db
     environment:
-      - DATABASE_URL=mysql+pymysql://user:password@db:3306/startupconnect 
+      - DATABASE_URL=mysql+pymysql://user:password@mysql_db:3306/startupconnect 
 
   # Streamlit Frontend 
   app:
-    build: ./app
+    build:
+      context: ./app
+      dockerfile: src/Dockerfile
     container_name: web-app
     hostname: web-app
     volumes:

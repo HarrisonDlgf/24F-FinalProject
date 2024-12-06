@@ -1,10 +1,11 @@
 from flask import Flask
+from flask_cors import CORS
 
 from backend.db_connection import db
 from backend.simple.simple_routes import simple_routes
 from backend.applications.applications import applications
 from backend.CommunicationHistory.communicationHistory import communicationHistory
-from backend.coop.coop import coop_bp
+from backend.coop.coop import coop
 from backend.feedback.feedback import feedback
 from backend.positions.positions import positions
 from backend.Startups.startups import startups
@@ -18,6 +19,7 @@ from dotenv import load_dotenv
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
 
     # Load environment variables
     # This function reads all the values from inside
@@ -36,7 +38,7 @@ def create_app():
     # app.config['MYSQL_DATABASE_USER'] = 'root'
     app.config['MYSQL_DATABASE_USER'] = 'root'
     app.config['MYSQL_DATABASE_PASSWORD'] = 'startupsrule'
-    app.config['MYSQL_DATABASE_HOST'] = 'db'
+    app.config['MYSQL_DATABASE_HOST'] = 'mysql_db'
     app.config['MYSQL_DATABASE_PORT'] = 3306
     app.config['MYSQL_DATABASE_DB'] = 'StartUpConnect'  # Change this to your DB name
 
@@ -51,7 +53,7 @@ def create_app():
     app.register_blueprint(simple_routes)
     app.register_blueprint(applications, url_prefix='/applications')
     app.register_blueprint(communicationHistory, url_prefix='/communication-history')
-    app.register_blueprint(coop_bp, url_prefix='/coop')
+    app.register_blueprint(coop, url_prefix='/coop')
     app.register_blueprint(feedback, url_prefix='/feedback')
     app.register_blueprint(positions, url_prefix='/positions')
     app.register_blueprint(startups, url_prefix='/startups')

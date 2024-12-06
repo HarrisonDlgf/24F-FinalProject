@@ -15,13 +15,13 @@ feedback = Blueprint('feedback', __name__)
 
 #------------------------------------------------------------
 # Get all feedback instances for a specific JobID
-@feedback.route('/feedback/<JobID>', methods=['GET'])
-def get_feedback(JobID):
-    current_app.logger.info(f'GET /feedback/<JobID> route for {JobID}')
+@feedback.route('/feedback/<int:job_id>', methods=['GET'])
+def get_feedback(job_id):
+    current_app.logger.info(f'GET /feedback/<job_id> route for {job_id}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT Ratings, Comments, SubmittedBy, SubmittedFor, JobID, FeedbackID 
                       FROM feedback 
-                      WHERE JobID = %s''', (JobID,))
+                      WHERE JobID = %s''', (job_id,))
     theData = cursor.fetchall()
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200

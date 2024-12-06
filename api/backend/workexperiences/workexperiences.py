@@ -13,13 +13,13 @@ workexperiences = Blueprint('workexperiences', __name__)
 #------------------------------------------------------------
 # Get all work experiences of a specific StudentID
 # Used by Alex to view candidate experience
-@workexperiences.route('/workexperiences/<StudentID>', methods=['GET'])
-def get_workexperiences(StudentID):
-    current_app.logger.info(f'GET /workexperiences/<StudentID> route for {StudentID}')
+@workexperiences.route('/workexperiences/<int:student_id>', methods=['GET'])
+def get_workexperiences(student_id):
+    current_app.logger.info(f'GET /workexperiences/<student_id> route for {student_id}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT StudentID, StartDate, EndDate, JobID, Feedback 
                       FROM workexperiences 
-                      WHERE StudentID = %s''', (StudentID,))
+                      WHERE StudentID = %s''', (student_id,))
     theData = cursor.fetchall()
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
@@ -49,9 +49,9 @@ def post_workexperience():
 #------------------------------------------------------------
 # Update mutable attributes of a specific instance of work experience
 # Used by Maddy and Jeff to keep work experience up to date
-@workexperiences.route('/workexperiences/<JobID>', methods=['PUT'])
-def update_workexperience(JobID):
-    current_app.logger.info(f'PUT /workexperiences/<JobID> route for {JobID}')
+@workexperiences.route('/workexperiences/<int:job_id>', methods=['PUT'])
+def update_workexperience(job_id):
+    current_app.logger.info(f'PUT /workexperiences/<job_id> route for {job_id}')
     work_info = request.json
     start_date = work_info.get('StartDate', None)
     end_date = work_info.get('EndDate', None)
@@ -75,43 +75,43 @@ def update_workexperience(JobID):
 
     query = f'''UPDATE workexperiences SET {", ".join(fields_to_update)} 
                 WHERE JobID = %s'''
-    data.append(JobID)
+    data.append(job_id)
     cursor = db.get_db().cursor()
     cursor.execute(query, tuple(data))
     db.get_db().commit()
     return make_response('Work experience updated successfully!', 200)
 
-    #------------------------------------------------------------
+#------------------------------------------------------------
 # Delete a specific instance of work experience
 # Used by Maddy and Jeff to remove incorrect or outdated entries
-@workexperiences.route('/workexperiences/<JobID>', methods=['DELETE'])
-def delete_workexperience(JobID):
-    current_app.logger.info(f'DELETE /workexperiences/<JobID> route for {JobID}')
+@workexperiences.route('/workexperiences/<int:job_id>', methods=['DELETE'])
+def delete_workexperience(job_id):
+    current_app.logger.info(f'DELETE /workexperiences/<job_id> route for {job_id}')
     cursor = db.get_db().cursor()
 
     # Execute the delete operation
-    cursor.execute('DELETE FROM workexperiences WHERE JobID = %s', (JobID,))
+    cursor.execute('DELETE FROM workexperiences WHERE JobID = %s', (job_id,))
     db.get_db().commit()
 
     # Return confirmation response
-    return make_response(f'Work experience with JobID {JobID} deleted successfully!', 200)
+    return make_response(f'Work experience with JobID {job_id} deleted successfully!', 200)
 
-    #------------------------------------------------------------
+#------------------------------------------------------------
 # Get the most recent work experience of a specific StudentID
 # Used by Alex to view the latest experience for candidates
-@workexperiences.route('/workexperiences/<StudentID>/latest', methods=['GET'])
-def get_latest_workexperience(StudentID):
-    current_app.logger.info(f'GET /workexperiences/<StudentID>/latest route for {StudentID}')
+@workexperiences.route('/workexperiences/<int:student_id>/latest', methods=['GET'])
+def get_latest_workexperience(student_id):
+    current_app.logger.info(f'GET /workexperiences/<student_id>/latest route for {student_id}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT StudentID, StartDate, EndDate, JobID, Feedback 
                       FROM workexperiences 
                       WHERE StudentID = %s
                       ORDER BY EndDate DESC
-                      LIMIT 1''', (StudentID,))
+                      LIMIT 1''', (student_id,))
     theData = cursor.fetchone()
     
     if not theData:
-        return make_response(f'No work experiences found for StudentID {StudentID}', 404)
+        return make_response(f'No work experiences found for StudentID {student_id}', 404)
     
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
