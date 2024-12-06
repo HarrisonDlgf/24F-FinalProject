@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO Skills (SkillID, SkillName, SkillLevel) VALUES (1, 'Python Programming', 'Beginner');
 INSERT INTO Skills (SkillID, SkillName, SkillLevel) VALUES (2, 'Data Analysis', 'Intermediate');
 INSERT INTO Skills (SkillID, SkillName, SkillLevel) VALUES (3, 'Web Development', 'Beginner');

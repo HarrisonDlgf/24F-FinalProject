@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication) 
 VALUES (1, 'Emily Johnson', 'Boston, MA', 'Previous co-op', 'US Citizen', 85, 10);
 
@@ -17,7 +19,7 @@ INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorizat
 VALUES (6, 'Noah Martinez', 'Seattle, WA', 'Previous internship', 'Green Card Holder', 80, 7);
 
 INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication) 
-VALUES (7, 'Ava Taylor', 'Denver, CO', 'No experience', 'US Citizen', 73, 9);
+VALUES (7, 'Maddy Taylor', 'Denver, CO', 'No experience', 'US Citizen', 73, 9);
 
 INSERT INTO Student (StudentID, Name, Location, ExperienceLevel, WorthAuthorization, EngagementScore, Communication) 
 VALUES (8, 'James Anderson', 'Miami, FL', 'Previous co-op', 'Requires Sponsorship', 82, 11);

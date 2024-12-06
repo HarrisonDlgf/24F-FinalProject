@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO StudentSkills (SkillID, StudentID) VALUES (10, 3);
 INSERT INTO StudentSkills (SkillID, StudentID) VALUES (15, 7);
 INSERT INTO StudentSkills (SkillID, StudentID) VALUES (25, 2);

@@ -26,13 +26,13 @@ services:
       - api  
 
   # MySQL Database Service
-  db:
+  mysql_db:
     image: mysql:8  
     container_name: mysql_db
-    hostname: db
+    hostname: mysql_db
     environment:
       MYSQL_ROOT_PASSWORD: startupsrule  
-      MYSQL_DATABASE: startupconnect
+      MYSQL_DATABASE: StartUpConnect
       MYSQL_USER: user
       MYSQL_PASSWORD: password  
     volumes:

@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO WorkExperiences (ExperienceID, StudentID, StartDate, EndDate, JobID, Feedback)
 VALUES (1, 12, '2022-03-01 08:15:00', '2023-05-15 17:30:00', 15, 8);
 

@@ -14,7 +14,7 @@ from backend.db_connection import db
 positions = Blueprint('positions', __name__)
 
 # request with filters to get positions with arbitrary WHERE clauses
-@positions.route('/positions', methods=['GET'])
+@positions.route('/', methods=['GET'])
 def get_positions():
     cursor = db.get_db().cursor()
     
@@ -70,7 +70,7 @@ def get_positions():
     return the_response
 
 # POST new position request
-@positions.route('/positions', methods=['POST'])
+@positions.route('/', methods=['POST'])
 def create_position():
     try:
         current_app.logger.info('Processing position creation request')
@@ -130,7 +130,7 @@ def create_position():
         return make_response(jsonify(return_value), 500)
 
 # Deleting position from database
-@positions.route('/positions/<int:job_id>', methods=['DELETE'])
+@positions.route('/<int:job_id>', methods=['DELETE'])
 def delete_position(job_id):
     try:
         cursor = db.get_db().cursor()
@@ -158,7 +158,7 @@ def delete_position(job_id):
 
 # Making a request given the blueprint
 # Updating a position
-@positions.route('/positions/<int:job_id>', methods=['PATCH'])
+@positions.route('/<int:job_id>', methods=['PATCH'])
 def update_position(job_id):
     try:
         current_app.logger.info(f'Processing position update request for ID {job_id}')
@@ -243,7 +243,7 @@ def update_position(job_id):
         return make_response(jsonify(return_value), 500)
 
 # Replacing all details of a position
-@positions.route('/positions/<int:job_id>', methods=['PUT'])
+@positions.route('/<int:job_id>', methods=['PUT'])
 def replace_position(job_id):
     try:
         current_app.logger.info(f'Processing position replacement request for ID {job_id}')

@@ -1,3 +1,5 @@
+USE StartUpConnect;
+
 INSERT INTO Startups (StartupID, Name, WebsiteURL, Rating, FundingStage, IndustryID, Communication)
 VALUES (1, 'Tech Innovators', 'https://www.techinnovators.com', 4.5, 'Series A', 15, 42);
 
