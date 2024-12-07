@@ -59,4 +59,4 @@ The front end is built using Streamlit
 - Interacts with the back-end to query real time results
 
 ## Demo Video
-- Here is a walkthrough on the project: https://youtu.be/pifwFx2vx1k
+- Here is a walkthrough on the project [here](https://youtu.be/pifwFx2vx1k)
