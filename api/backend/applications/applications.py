@@ -15,7 +15,7 @@ applications = Blueprint('applications', __name__)
 
 # Making a request given the blueprint
 # Looking at job applications given a job id
-@applications.route('/applications/job/<int:job_id>', methods=['GET'])
+@applications.route('/job/<int:job_id>', methods=['GET'])
 def job_apps(job_id):
     cursor = db.get_db().cursor()
     query = ('''
@@ -32,7 +32,7 @@ def job_apps(job_id):
 
 # Making more requests for applications
 # Submitting a job app per jobID
-@applications.route('/applications/<int:job_id>', methods=['POST'])
+@applications.route('/<int:job_id>', methods=['POST'])
 def submitting_app(job_id):
     application_info = request.json
     student_id = application_info['student_id']
@@ -58,7 +58,7 @@ def submitting_app(job_id):
     return the_response
 
 # A Delete route for JobID in applications
-@applications.route('/applications/<int:job_id>', methods=['DELETE'])
+@applications.route('/<int:job_id>', methods=['DELETE'])
 def delete_application(job_id):
     application_info = request.json
     student_id = application_info['student_id']
@@ -74,7 +74,7 @@ def delete_application(job_id):
     return jsonify({"message": "Application deleted."}), 200
 
 # Return all under review applications
-@applications.route('/applications/under_review', methods=['GET'])
+@applications.route('/under_review', methods=['GET'])
 def get_under_review():
     cursor = db.get_db().cursor()
     query = '''
@@ -92,7 +92,7 @@ def get_under_review():
 
 # Based on STATUS, which is an ENUM
 # GET route, returns all applications based on status
-@applications.route('/applications/<string:status>', methods=['GET'])
+@applications.route('/<string:status>', methods=['GET'])
 def get_applications_by_status(status):
     cursor = db.get_db().cursor()
     query = '''
@@ -108,7 +108,7 @@ def get_applications_by_status(status):
     return response
 
 # POST route, setting the value of status
-@applications.route('/applications/<string:status>', methods=['POST'])
+@applications.route('/<string:status>', methods=['POST'])
 def set_status(status):
     application_info = request.json
     application_id = application_info['application_id']
@@ -133,7 +133,7 @@ def set_status(status):
     return the_response
 
 # PUT route to reject an application 
-@applications.route('/applications/reject/<int:application_id>', methods=['PUT'])
+@applications.route('/reject/<int:application_id>', methods=['PUT'])
 def reject_application(application_id):
     cursor = db.get_db().cursor()
     query = '''
@@ -154,7 +154,7 @@ def reject_application(application_id):
     the_response.status_code = 200
     return the_response
 
-@applications.route('/applications/student/<student_id>', methods=['GET'])
+@applications.route('/student/<student_id>', methods=['GET'])
 def get_student_applications(student_id):
     try:
         cursor = db.get_db().cursor()

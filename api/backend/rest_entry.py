@@ -51,8 +51,8 @@ def create_app():
     # and give a url prefix to each
     app.logger.info('current_app(): registering blueprints with Flask app object.')   
     app.register_blueprint(simple_routes)
-    app.register_blueprint(applications, url_prefix='/applications')
     app.register_blueprint(communicationHistory, url_prefix='/communication-history')
+    app.register_blueprint(applications, url_prefix='/applications')
     app.register_blueprint(coop, url_prefix='/coop')
     app.register_blueprint(feedback, url_prefix='/feedback')
     app.register_blueprint(positions, url_prefix='/positions')

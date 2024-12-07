@@ -15,14 +15,15 @@ message_type = st.selectbox(
 
 # searching by id and input
 student_id = st.text_input("Search by Student ID")
+student_id_int = int(student_id) if student_id else None
 
 if student_id:
     if message_type != "All":
-        # Use the specific message type endpoint
-        response = requests.get(f'http://api:4000/communicationHistory/{student_id}/type/{message_type}')
+        # Updated URL format
+        response = requests.get(f'http://api:4000/communication-history/{student_id}/type/{message_type}')
     else:
-        # Get all messages for student
-        response = requests.get(f'http://api:4000/communicationHistory/{student_id}')
+        # Updated URL format
+        response = requests.get(f'http://api:4000/communication-history/{student_id}')
     
     if response.status_code == 200:
         messages = response.json()
@@ -34,8 +35,9 @@ if student_id:
                 
                 # Option to delete message
                 if st.button("Delete Message", key=f"delete_{msg['MessageID']}"):
+                    # Updated URL format
                     delete_response = requests.delete(
-                        f'http://api:4000/communicationHistory/{student_id}',
+                        f'http://api:4000/communication-history/{student_id}',
                         params={'message_id': msg['MessageID']}
                     )
                     if delete_response.status_code == 200:
@@ -47,6 +49,7 @@ st.divider()
 st.subheader("Send New Message")
 
 new_student_id = st.text_input("Student ID")
+new_student_id_int = int(new_student_id) if new_student_id else None
 new_message_type = st.selectbox(
     "Message Type",
     ["Follow-up", "Inquiry", "Response", "Notification", "Feedback"]
@@ -54,14 +57,35 @@ new_message_type = st.selectbox(
 message_content = st.text_area("Message Content")
 
 if st.button("Send Message"):
-    if new_student_id and message_content:
+    if new_student_id_int and message_content:
         response = requests.post(
-            f'http://api:4000/communicationHistory/{new_student_id}',
+            f'http://api:4000/communication-history/{new_student_id_int}/send',
             json={
                 'message_type': new_message_type,
                 'message_content': message_content
             }
         )
+        
+        # More debug info
+        st.write(f"Status Code: {response.status_code}")
+        st.write(f"Response Text: {response.text}")
+        
         if response.status_code == 201:
             st.success("Message sent successfully!")
             st.rerun()
+        else:
+            st.error(f"Failed to send message. Status code: {response.status_code}")
+
+# Add this temporarily to test the connection
+if st.button("Test API Connection"):
+    try:
+        response = requests.get('http://api:4000/communication-history')
+        st.write(f"Status: {response.status_code}")
+        if response.status_code == 200:
+            st.success("API Connection Successful!")
+            st.json(response.json())
+        else:
+            st.error(f"API returned status code: {response.status_code}")
+            st.write(f"Response Text: {response.text}")
+    except Exception as e:
+        st.error(f"Connection Error: {str(e)}")
