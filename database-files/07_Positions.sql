@@ -31,9 +31,6 @@ INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, I
 VALUES (10, 'React Developer', 'react.dev@example.com', '3-5 years', 'Technology', 'Denver, CO', '2024-10-20', 'React, Redux', '$80,000-$100,000', 'Full-time', 10);
 
 INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
-VALUES (10, 'React Developer', 'react.dev@example.com', '3-5 years', 'Technology', 'Denver, CO', '2024-10-20', 'React, Redux', '$80,000-$100,000', 'Full-time', 10);
-
-INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
 VALUES (11, 'Systems Analyst', 'sys.analyst@example.com', '1-2 years', 'Finance', 'Phoenix, AZ', '2024-09-25', 'SQL, Database Design', '$60,000-$80,000', 'Full-time', 11);
 
 INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
@@ -89,9 +86,6 @@ VALUES (28, 'Network Administrator', 'net.admin@example.com', '3-5 years', 'Tech
 
 INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
 VALUES (29, 'Game Developer', 'game.dev@example.com', '1-2 years', 'Entertainment', 'Seattle, WA', '2024-11-10', 'Game Development, Unity', '$60,000-$80,000', 'Full-time', 29);
-
-INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
-VALUES (30, 'Environmental Scientist', 'env.scientist@example.com', '5+ years', 'Energy', 'Denver, CO', '2024-12-05', 'Environmental Analysis, GIS', '$100,000-$120,000', 'Contract', 30);
 
 INSERT INTO Positions (JobID, PositionTitle, ContactEmail, ExperienceRequired, Industry, Location, StartDate, Skills, SalaryRange, PositionType, StartUpID)
 VALUES (30, 'Environmental Scientist', 'env.scientist@example.com', '5+ years', 'Energy', 'Denver, CO', '2024-12-05', 'Environmental Analysis, GIS', '$100,000-$120,000', 'Contract', 30);

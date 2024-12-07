@@ -1,7 +1,5 @@
 CREATE DATABASE IF NOT EXISTS StartUpConnect;
 
-SHOW DATABASES;
-
 USE StartUpConnect;
 
 CREATE TABLE IF NOT EXISTS CommunicationHistory(

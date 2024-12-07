@@ -90,8 +90,6 @@ VALUES (29, 'GrowTech', 'https://www.growtech.com', 3.9, 'Series A', 7, 27);
 INSERT INTO Startups (StartupID, Name, WebsiteURL, Rating, FundingStage, IndustryID, Communication)
 VALUES (30, 'DeepVision AI', 'https://www.deepvisionai.com', 4.8, 'Seed', 8, 9);
 
-INSERT INTO Startups (StartupID, Name, WebsiteURL, Rating, FundingStage, IndustryID, Communication)
-VALUES (30, 'DeepVision AI', 'https://www.deepvisionai.com', 4.8, 'Seed', 8, 9);
 
 INSERT INTO Startups (StartupID, Name, WebsiteURL, Rating, FundingStage, IndustryID, Communication)
 VALUES (31, 'FitLife', 'https://www.fitlife.com', 4.3, 'Series A', 6, 20);

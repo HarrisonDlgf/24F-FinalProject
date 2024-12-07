@@ -15,7 +15,7 @@ st.title('Job Application Dashboard')
 # Add a test button and response display
 if st.button("Test API Connection"):
     try:
-        response = requests.get('http://api:4000/positions/')
+        response = requests.get('http://api:4000/positions')
         if response.status_code == 200:
             st.success("API Connection Successful!")
             st.json(response.json())
@@ -29,8 +29,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     try:
-        response = requests.get('http://api:4000/positions/')
-        st.write(f"Status Code: {response.status_code}")
+        response = requests.get('http://api:4000/positions')
         
         if response.status_code == 200:
             positions = response.json()
@@ -44,7 +43,7 @@ with col1:
             
             if filtered_positions:
                 df = pd.DataFrame(filtered_positions)
-                display_columns = ['PositionTitle', 'StartUpName', 'Location', 'SalaryRange', 'PositionType']
+                display_columns = ['PositionTitle', 'Location', 'SalaryRange', 'PositionType']
                 st.dataframe(df[display_columns], use_container_width=True)
             else:
                 st.info("No positions found matching the selected criteria.")

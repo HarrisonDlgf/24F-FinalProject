@@ -13,26 +13,26 @@ from backend.db_connection import db
 # routes.
 positions = Blueprint('positions', __name__)
 
-# request with filters to get positions with arbitrary WHERE clauses
 @positions.route('/', methods=['GET'])
 def get_positions():
     try:
         cursor = db.get_db().cursor()
         
-        # base query 
-        query = 'SELECT * FROM Positions WHERE 1=1'
-        params = []
+        query = 'SELECT * FROM Positions'
+        params = []   
         
+        current_app.logger.warning(f"Executing query: {query}")  # Add this line
         cursor.execute(query, tuple(params))
         theData = cursor.fetchall()
         
+        current_app.logger.warning(f"Retrieved {len(theData)} records")  # Add this line
         the_response = make_response(jsonify(theData))
         the_response.status_code = 200
         return the_response
         
     except Exception as e:
-        # Log the full error details
-        current_app.logger.error(f"Error in get_positions: {str(e)}")
+        current_app.logger.warning(f"Error in get_positions: {str(e)}")
+        current_app.logger.warning(f"Error type: {type(e)}")  # Add this line
         return jsonify({
             "error": str(e),
             "message": "Failed to fetch positions"
