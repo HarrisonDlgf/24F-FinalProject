@@ -1,6 +1,7 @@
 import streamlit as st
 from modules.nav import SideBarLinks
 import requests
+import time 
 
 st.set_page_config(layout='wide')
 SideBarLinks()
@@ -66,15 +67,17 @@ if st.button("Send Message"):
             }
         )
         
-        # More debug info
-        st.write(f"Status Code: {response.status_code}")
-        st.write(f"Response Text: {response.text}")
-        
         if response.status_code == 201:
-            st.success("Message sent successfully!")
+            success_message = st.success(f"Message sent successfully to Student {new_student_id_int}!")
+            # Clear the form
+            st.text_input("Student ID", value="", key="clear_id")
+            st.text_area("Message Content", value="", key="clear_content")
+            time.sleep(2) 
             st.rerun()
         else:
-            st.error(f"Failed to send message. Status code: {response.status_code}")
+            st.error(f"Failed to send message: {response.json().get('message', 'Unknown error')}")
+    else:
+        st.warning("Please enter both Student ID and Message Content")
 
 # Add this temporarily to test the connection
 if st.button("Test API Connection"):

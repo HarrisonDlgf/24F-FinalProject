@@ -83,7 +83,7 @@ def create_new_message(student_id):
             
         # Get next MessageID - handle empty table case
         current_app.logger.warning("Getting next message ID...")
-        get_max_id_query = 'SELECT MAX(MessageID) FROM CommunicationHistory'
+        get_max_id_query = 'SELECT MAX(MessageID) as max_id FROM CommunicationHistory'
         cursor.execute(get_max_id_query)
         result = cursor.fetchone()
         
@@ -91,10 +91,10 @@ def create_new_message(student_id):
         current_app.logger.warning(f"MAX(MessageID) query returned: {result}")
         
         # Handle the case where result is None or empty
-        if result is None or result[0] is None:
+        if result is None or result['max_id'] is None:
             new_message_id = 1
         else:
-            new_message_id = result[0] + 1
+            new_message_id = result['max_id'] + 1
             
         current_app.logger.warning(f"New message ID will be: {new_message_id}")
         
