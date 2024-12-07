@@ -6,6 +6,7 @@ def coop_updates():
 
 
     coop_id = st.text_input("Enter your Co-op ID:", "")
+    coop_id_int = int(coop_id) if coop_id else None
     new_position_title = st.text_input("Enter a new Position Title (optional):", "")
     new_company_name = st.text_input("Enter a new Company Name (optional):", "")
     new_start_date = st.date_input("Enter a new Start Date (optional):")
@@ -30,7 +31,7 @@ def coop_updates():
             updates["EndDate"] = new_end_date.strftime("%Y-%m-%d")
 
         # Make PUT request to the Flask API
-        url = f"http://api:4000/api/WorkExperiences/{coop_id}"
+        url = f"http://api:4000/work-experiences/{coop_id_int}"
         try:
             response = requests.put(url, json=updates, timeout=10)
             if response.status_code == 200:

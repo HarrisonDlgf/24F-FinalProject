@@ -13,9 +13,9 @@ workexperiences = Blueprint('workexperiences', __name__)
 #------------------------------------------------------------
 # Get all work experiences of a specific StudentID
 # Used by Alex to view candidate experience
-@workexperiences.route('/workexperiences/<int:student_id>', methods=['GET'])
+@workexperiences.route('/<int:student_id>', methods=['GET'])
 def get_workexperiences(student_id):
-    current_app.logger.info(f'GET /workexperiences/<student_id> route for {student_id}')
+    current_app.logger.info(f'GET /<student_id> route for {student_id}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT StudentID, StartDate, EndDate, JobID, Feedback 
                       FROM workexperiences 
@@ -28,9 +28,9 @@ def get_workexperiences(student_id):
 #------------------------------------------------------------
 # Post a new instance of work experience
 # Used by Maddy and Jeff to create work experience entries
-@workexperiences.route('/workexperiences', methods=['POST'])
+@workexperiences.route('/', methods=['POST'])
 def post_workexperience():
-    current_app.logger.info('POST /workexperiences route')
+    current_app.logger.info('POST / route')
     work_info = request.json
     student_id = work_info['StudentID']
     start_date = work_info['StartDate']
@@ -49,9 +49,9 @@ def post_workexperience():
 #------------------------------------------------------------
 # Update mutable attributes of a specific instance of work experience
 # Used by Maddy and Jeff to keep work experience up to date
-@workexperiences.route('/workexperiences/<int:job_id>', methods=['PUT'])
+@workexperiences.route('/<int:job_id>', methods=['PUT'])
 def update_workexperience(job_id):
-    current_app.logger.info(f'PUT /workexperiences/<job_id> route for {job_id}')
+    current_app.logger.info(f'PUT /<job_id> route for {job_id}')
     work_info = request.json
     start_date = work_info.get('StartDate', None)
     end_date = work_info.get('EndDate', None)
@@ -73,7 +73,7 @@ def update_workexperience(job_id):
     if not fields_to_update:
         return make_response('No valid fields provided to update.', 400)
 
-    query = f'''UPDATE workexperiences SET {", ".join(fields_to_update)} 
+    query = f'''UPDATE WorkExperiences SET {", ".join(fields_to_update)} 
                 WHERE JobID = %s'''
     data.append(job_id)
     cursor = db.get_db().cursor()
@@ -84,9 +84,9 @@ def update_workexperience(job_id):
 #------------------------------------------------------------
 # Delete a specific instance of work experience
 # Used by Maddy and Jeff to remove incorrect or outdated entries
-@workexperiences.route('/workexperiences/<int:job_id>', methods=['DELETE'])
+@workexperiences.route('/<int:job_id>', methods=['DELETE'])
 def delete_workexperience(job_id):
-    current_app.logger.info(f'DELETE /workexperiences/<job_id> route for {job_id}')
+    current_app.logger.info(f'DELETE /<job_id> route for {job_id}')
     cursor = db.get_db().cursor()
 
     # Execute the delete operation
@@ -99,9 +99,9 @@ def delete_workexperience(job_id):
 #------------------------------------------------------------
 # Get the most recent work experience of a specific StudentID
 # Used by Alex to view the latest experience for candidates
-@workexperiences.route('/workexperiences/<int:student_id>/latest', methods=['GET'])
+@workexperiences.route('/<int:student_id>/latest', methods=['GET'])
 def get_latest_workexperience(student_id):
-    current_app.logger.info(f'GET /workexperiences/<student_id>/latest route for {student_id}')
+    current_app.logger.info(f'GET /<student_id>/latest route for {student_id}')
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT StudentID, StartDate, EndDate, JobID, Feedback 
                       FROM workexperiences 
