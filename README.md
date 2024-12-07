@@ -19,6 +19,22 @@ Team Members:
 - Student-startup matching based on skills and availability.
 - Career center analytics for placement success, industry trends, and personalized help.
 - Feedback to continue to improve the experience for both students and companies.
+## How to Run
+### WHAT YOU NEED
+- Docker
+- Docker Compose
+- A proper python IDE
+
+### ACTUALLY RUNNING IT
+- Clone the [repo](https://github.com/HarrisonDlgf/StartUpConnect)
+- Change into the repo directory in your terminal `cd StartUpConnect`
+- Set up environment variables using our template
+- Run docker-compose up -d --build
+- This will spin the containers for the database, Flask API, and Streamlit frontend in detached mode.
+- MySQL will be available on port 3306, the Flask API on port 4000, and the Streamlit UI on port 8502.
+
+### OPEN THE WEBSITE
+- To access the Streamlit UI, open a web browser and navigate to http://localhost:8502.
 
 ## Technologies Used
 - Python
