@@ -30,7 +30,7 @@ def coop_updates():
             updates["EndDate"] = new_end_date.strftime("%Y-%m-%d")
 
         # Make PUT request to the Flask API
-        url = f"http://api:4000/api/coop_updates/{coop_id}"
+        url = f"http://api:4000/api/WorkExperiences/{coop_id}"
         try:
             response = requests.put(url, json=updates, timeout=10)
             if response.status_code == 200:
