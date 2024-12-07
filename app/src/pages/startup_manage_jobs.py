@@ -68,7 +68,7 @@ with tab2:
         student_id = st.text_input("Enter Student ID to view experiences:")
         if st.button("Fetch Work Experiences"):
             try:
-                response = requests.get(f"http://api:4000/workexperiences/{student_id}")
+                response = requests.get(f"http://api:4000/work-experiences/{student_id}")
                 if response.status_code == 200:
                     data = response.json()
                     df = pd.DataFrame(data)
@@ -97,7 +97,7 @@ with tab2:
                 "Feedback": feedback
             }
             try:
-                response = requests.post("http://api:4000/workexperiences", json=work_data)
+                response = requests.post("http://api:4000/work-experiences", json=work_data)
                 if response.status_code == 201:
                     st.success("Work experience added successfully!")
                 else:
@@ -118,7 +118,7 @@ with tab2:
                 "Feedback": feedback if feedback else None,
             }
             try:
-                response = requests.put(f"http://api:4000/workexperiences/{job_id}", json=work_data)
+                response = requests.put(f"http://api:4000/work-experiences/{job_id}", json=work_data)
                 if response.status_code == 200:
                     st.success(f"Work experience {job_id} updated successfully!")
                 else:
@@ -131,7 +131,7 @@ with tab2:
         job_id = st.text_input("Enter Job ID to delete:")
         if st.button("Delete Work Experience"):
             try:
-                response = requests.delete(f"http://api:4000/workexperiences/{job_id}")
+                response = requests.delete(f"http://api:4000/work-experiences/{job_id}")
                 if response.status_code == 200:
                     st.success(f"Work experience {job_id} deleted successfully!")
                 else:
@@ -144,7 +144,7 @@ with tab2:
         student_id = st.text_input("Enter Student ID to fetch the latest experience:")
         if st.button("Fetch Latest Experience"):
             try:
-                response = requests.get(f"http://api:4000/workexperiences/{student_id}/latest")
+                response = requests.get(f"http://api:4000/work-experiences/{student_id}/latest")
                 if response.status_code == 200:
                     data = response.json()
                     st.json(data)

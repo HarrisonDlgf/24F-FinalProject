@@ -17,7 +17,7 @@ def search_coop_opportunities():
         return
 
     # Input fields for user query
-    keyword = st.text_input("Enter a keyword (e.g., 'Data Analyst')", "")
+    keyword = st.text_input("Enter a keyword (e.g., 'Data Scientist')", "")
     location = st.text_input("Enter a location (e.g., 'Boston')", "")
 
     # Search button

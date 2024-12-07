@@ -55,23 +55,33 @@ with col1:
         st.info("No positions found matching the selected criteria.")
 
 with col2:
-    st.subheader("Applications Under Review")
-    try:
-        response = requests.get('http://api:4000/applications/under_review')
-        if response.status_code == 200:
-            applications = response.json()
-            if applications:
-                df = pd.DataFrame(applications)
-                
-                st.metric("Total Under Review", len(df))
-                
-                st.subheader("Application Details")
-                st.dataframe(df, use_container_width=True)
+    st.subheader("Search Applications by Job ID")
+    
+    # Add a search box for JobID
+    job_id_search = st.text_input("Enter Job ID", key="job_id_search")
+    
+    if job_id_search:  
+        try:
+            response = requests.get(f'http://api:4000/applications/job/{job_id_search}')
+            if response.status_code == 200:
+                applications = response.json()
+                if applications:
+                    df = pd.DataFrame(applications)
+                    st.dataframe(df, use_container_width=True)
+                    
+                    # Add delete button for this application
+                    if st.button("Delete All Applications For This Job", key=f"delete_{job_id_search}"):
+                        delete_response = requests.delete(f'http://api:4000/applications/job/{job_id_search}')
+                        if delete_response.status_code == 200:
+                            st.success("Application deleted successfully!")
+                            st.rerun()  # Refresh the page
+                        else:
+                            st.error(f"Failed to delete application. Status code: {delete_response.status_code}")
+                else:
+                    st.info(f"No applications found for Job ID: {job_id_search}")
             else:
-                st.info("No applications currently under review.")
-        else:
-            st.error(f"Failed to fetch applications. Status code: {response.status_code}")
-            
-    except Exception as e:
-        st.error(f"Error fetching application data: {str(e)}")
-        logger.error(f"Error getting data from API: {str(e)}")
+                st.error(f"Failed to fetch applications. Status code: {response.status_code}")
+                
+        except Exception as e:
+            st.error(f"Error fetching application data: {str(e)}")
+            logger.error(f"Error getting data from API: {str(e)}")
