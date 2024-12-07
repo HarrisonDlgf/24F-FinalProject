@@ -19,10 +19,10 @@ student_id = st.text_input("Search by Student ID")
 if student_id:
     if message_type != "All":
         # Use the specific message type endpoint
-        response = requests.get(f'http://localhost:4000/communicationHistory/{student_id}/type/{message_type}')
+        response = requests.get(f'http://api:4000/communicationHistory/{student_id}/type/{message_type}')
     else:
         # Get all messages for student
-        response = requests.get(f'http://localhost:4000/communicationHistory/{student_id}')
+        response = requests.get(f'http://api:4000/communicationHistory/{student_id}')
     
     if response.status_code == 200:
         messages = response.json()
@@ -35,7 +35,7 @@ if student_id:
                 # Option to delete message
                 if st.button("Delete Message", key=f"delete_{msg['MessageID']}"):
                     delete_response = requests.delete(
-                        f'http://localhost:4000/communicationHistory/{student_id}',
+                        f'http://api:4000/communicationHistory/{student_id}',
                         params={'message_id': msg['MessageID']}
                     )
                     if delete_response.status_code == 200:
@@ -56,7 +56,7 @@ message_content = st.text_area("Message Content")
 if st.button("Send Message"):
     if new_student_id and message_content:
         response = requests.post(
-            f'http://localhost:4000/communicationHistory/{new_student_id}',
+            f'http://api:4000/communicationHistory/{new_student_id}',
             json={
                 'message_type': new_message_type,
                 'message_content': message_content

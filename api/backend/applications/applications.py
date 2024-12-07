@@ -15,15 +15,15 @@ applications = Blueprint('applications', __name__)
 
 # Making a request given the blueprint
 # Looking at job applications given a job id
-@applications.route('/applications/<int:job_id>', methods=['GET'])
+@applications.route('/applications/job/<int:job_id>', methods=['GET'])
 def job_apps(job_id):
     cursor = db.get_db().cursor()
     query = ('''
-    SELECT ApplicationID, StudentID, JobID, SubmissionDate, Status
+    SELECT *
         FROM Applications
         WHERE JobID = %s
     ''')
-    cursor.execute(query, job_id)
+    cursor.execute(query, (job_id,))
     theData = cursor.fetchall()
     
     the_response = make_response(jsonify(theData))

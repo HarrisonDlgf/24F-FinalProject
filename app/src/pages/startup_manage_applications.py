@@ -28,7 +28,7 @@ with tab1:
             }
             try:
                 response = requests.post(
-                    f"http://localhost:4000/applications/{job_id}", json=application_data
+                    f"http://api:4000/applications/{job_id}", json=application_data
                 )
                 if response.status_code == 200:
                     st.success(f"Application for Job ID {job_id} submitted successfully!")
@@ -59,7 +59,7 @@ with tab2:
         job_id = st.number_input("Enter Job ID:", min_value=1, step=1)
         if st.button("Fetch Applications"):
             try:
-                response = requests.get(f"http://localhost:4000/applications/{job_id}")
+                response = requests.get(f"http://api:4000/applications/{job_id}")
                 if response.status_code == 200:
                     data = response.json()
                     if data:
@@ -82,7 +82,7 @@ with tab2:
             else:
                 try:
                     response = requests.delete(
-                        f"http://localhost:4000/applications/{job_id}",
+                        f"http://api:4000/applications/{job_id}",
                         json={"student_id": student_id}
                     )
                     if response.status_code == 200:
@@ -96,7 +96,7 @@ with tab2:
     if action == "View Under Review Applications":
         if st.button("Fetch Under Review Applications"):
             try:
-                response = requests.get("http://localhost:4000/applications/under_review")
+                response = requests.get("http://api:4000/applications/under_review")
                 if response.status_code == 200:
                     data = response.json()
                     if data:
@@ -114,7 +114,7 @@ with tab2:
         status = st.selectbox("Select Status:", ["UNDER REVIEW", "ACCEPTED", "REJECTED"])
         if st.button("Fetch Applications by Status"):
             try:
-                response = requests.get(f"http://localhost:4000/applications/{status}")
+                response = requests.get(f"http://api:4000/applications/{status}")
                 if response.status_code == 200:
                     data = response.json()
                     if data:
@@ -137,7 +137,7 @@ with tab2:
             else:
                 try:
                     response = requests.post(
-                        f"http://localhost:4000/applications/{status}",
+                        f"http://api:4000/applications/{status}",
                         json={"application_id": application_id}
                     )
                     if response.status_code == 200:
@@ -155,7 +155,7 @@ with tab2:
                 st.error("Please provide an Application ID.")
             else:
                 try:
-                    response = requests.put(f"http://localhost:4000/applications/reject/{application_id}")
+                    response = requests.put(f"http://api:4000/applications/reject/{application_id}")
                     if response.status_code == 200:
                         st.success(f"Application {application_id} has been rejected.")
                     else:

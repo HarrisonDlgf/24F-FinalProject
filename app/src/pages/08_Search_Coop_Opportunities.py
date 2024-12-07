@@ -9,10 +9,10 @@ def search_coop_opportunities():
 
     # Display API connection status
     try:
-        requests.get('http://localhost:4000')
+        requests.get('http://api:4000')
         st.success("✅ Connected to API server")
     except requests.exceptions.RequestException:
-        st.error("❌ Cannot connect to API server. Please ensure the backend server is running on " + 'http://localhost:4000')
+        st.error("❌ Cannot connect to API server. Please ensure the backend server is running on " + 'http://api:4000')
         st.info("To fix this:\n1. Make sure the Flask backend is running\n2. Verify the API_URL in your .env file\n3. Check if the port 4000 is available")
         return
 
@@ -23,7 +23,7 @@ def search_coop_opportunities():
     # Search button
     if st.button("Search"):
         # Update URL to use environment variable
-        url = f"{API_URL}/positions"
+        url = "http://api:4000/positions"
 
         # Query parameters
         params = {}

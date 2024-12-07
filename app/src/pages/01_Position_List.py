@@ -37,7 +37,6 @@ def get_filter_options():
                 "ExperienceRequired": sorted(list(set(p["ExperienceRequired"] for p in positions))),
                 "Skills": sorted(list(set(p["Skills"] for p in positions))),
                 "SalaryRange": sorted(list(set(p["SalaryRange"] for p in positions))),
-                "StartUpName": sorted(list(set(p["StartUpName"] for p in positions)))
             }
     except Exception as e:
         st.error(f"Error loading filter options: {str(e)}")
@@ -48,7 +47,6 @@ def get_filter_options():
             "ExperienceRequired": [],
             "Skills": [],
             "SalaryRange": [],
-            "StartUpName": []
         }
 
 # Get filter options
@@ -88,11 +86,6 @@ with st.sidebar:
             options=[""] + filter_options.get("SalaryRange", []),
             key="salary_filter"
         ),
-        "StartUpName": st.selectbox(
-            "StartUp Name",
-            options=[""] + filter_options.get("StartUpName", []),
-            key="startup_filter"
-        )
     }
 
 def load_positions(filters=None):
@@ -123,7 +116,6 @@ if positions:
         with col1:
             if st.button(
                 f"📋 {position['PositionTitle']}\n"
-                f"🏢 {position['StartUpName']}\n"
                 f"📍 {position['Location']}",
                 key=f"pos_{position['JobID']}"
             ):

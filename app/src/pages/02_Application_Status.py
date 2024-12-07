@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_BASE_URL = "http://localhost:4000"
+API_BASE_URL = "http://api:4000"
 
 st.title("Application Status")
 
