@@ -177,3 +177,23 @@ def search_startups():
     except Exception as e:
         return make_response(jsonify({"error": f"Error searching startups: {str(e)}"}), 500)
 
+@startups.route('/<int:startup_id>', methods=['GET'])
+def get_startup(startup_id):
+    try:
+        cursor = db.get_db().cursor()
+        query = 'SELECT * FROM Startups WHERE StartupID = %s'
+        cursor.execute(query, (startup_id,))
+        startup = cursor.fetchone()
+        
+        if startup:
+            return make_response(jsonify(startup), 200)
+        else:
+            return make_response(jsonify({"error": "Startup not found"}), 404)
+            
+    except Exception as e:
+        current_app.logger.warning(f"Error in get_startup: {str(e)}")
+        return jsonify({
+            "error": str(e),
+            "message": "Failed to fetch startup"
+        }), 500
+

@@ -18,21 +18,27 @@ def get_positions():
     try:
         cursor = db.get_db().cursor()
         
-        query = 'SELECT * FROM Positions'
-        params = []   
+        # Base query with JOIN to get startup name
+        query = '''
+            SELECT p.*, s.Name as CompanyName 
+            FROM Positions p 
+            INNER JOIN Startups s ON p.StartUpID = s.StartupID 
+            WHERE 1=1
+        '''
+        params = []
         
-        current_app.logger.warning(f"Executing query: {query}")  # Add this line
+        # Add filters if they exist
+        if request.args.get('JobID'):
+            query += ' AND p.JobID = %s'
+            params.append(request.args.get('JobID'))
+        
         cursor.execute(query, tuple(params))
         theData = cursor.fetchall()
         
-        current_app.logger.warning(f"Retrieved {len(theData)} records")  # Add this line
-        the_response = make_response(jsonify(theData))
-        the_response.status_code = 200
-        return the_response
+        return make_response(jsonify(theData), 200)
         
     except Exception as e:
         current_app.logger.warning(f"Error in get_positions: {str(e)}")
-        current_app.logger.warning(f"Error type: {type(e)}")  # Add this line
         return jsonify({
             "error": str(e),
             "message": "Failed to fetch positions"

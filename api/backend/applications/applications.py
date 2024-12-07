@@ -154,42 +154,30 @@ def reject_application(application_id):
     the_response.status_code = 200
     return the_response
 
-@applications.route('/applications/student/<student_id>', methods=['GET'])
+@applications.route('/applications/student/<int:student_id>', methods=['GET'])
 def get_student_applications(student_id):
     try:
         cursor = db.get_db().cursor()
         
-        # Join with positions table to get position details
-        cursor.execute('''
-            SELECT 
-                a.ApplicationID,
-                a.ApplicationDate,
-                a.Status,
-                p.PositionTitle,
-                p.StartUpName,
-                p.Location,
-                p.PositionType,
-                p.ContactEmail
-            FROM applications a
-            JOIN positions p ON a.JobID = p.JobID
+        # Join with Positions to get position details
+        query = '''
+            SELECT a.ApplicationID, a.StudentID, a.JobID, a.SubmissionDate,
+                   p.PositionTitle, p.Location, p.PositionType
+            FROM Applications a
+            JOIN Positions p ON a.JobID = p.JobID
             WHERE a.StudentID = %s
-            ORDER BY a.ApplicationDate DESC
-        ''', (student_id,))
+            ORDER BY a.SubmissionDate DESC
+        '''
         
+        cursor.execute(query, (student_id,))
         applications = cursor.fetchall()
         
-        if not applications:
-            return_value = {
-                'message': f'No applications found for student {student_id}'
-            }
-            return make_response(jsonify(return_value), 404)
-            
-        return_value = applications
-        return make_response(jsonify(return_value), 200)
+        return make_response(jsonify(applications), 200)
         
     except Exception as e:
-        return_value = {
-            'error': f'Error retrieving applications: {str(e)}'
-        }
-        return make_response(jsonify(return_value), 500)
+        current_app.logger.error(f"Error in get_student_applications: {str(e)}")
+        return make_response(jsonify({
+            "error": str(e),
+            "message": "Failed to fetch applications"
+        }), 500)
 

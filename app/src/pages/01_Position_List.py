@@ -90,7 +90,15 @@ with st.sidebar:
 
 def load_positions(filters=None):
     try:
-        response = requests.get(f"{API_BASE_URL}/positions", params=filters)
+        # Create params dict for the request
+        params = {}
+        if filters:
+            for key, value in filters.items():
+                if value and value.strip():  # Only add non-empty values
+                    params[key] = value.strip()
+        
+        response = requests.get(f"{API_BASE_URL}/positions", params=params)
+            
         if response.status_code == 200:
             return response.json()
         else:
@@ -101,29 +109,65 @@ def load_positions(filters=None):
         return []
 
 # Load initial positions or filtered positions
+active_filters = {k: v for k, v in filters.items() if v and v.strip()}  # Only keep non-empty filters
+
 if st.sidebar.button("Apply Filters"):
-    positions = load_positions(filters)
+    # Load filtered positions
+    positions = load_positions(active_filters)
+    
+    # Display filtered positions
+    if positions:
+        matching_positions = [p for p in positions if all(p[k].lower() == v.lower() for k, v in active_filters.items())]
+        st.header(f"Available Positions ({len(matching_positions)} matches)")
+        for position in positions:
+            # Only display positions that match ALL filters
+            should_display = True
+            for filter_key, filter_value in active_filters.items():
+                if position[filter_key].lower() != filter_value.lower():
+                    should_display = False
+                    break
+            
+            if should_display:
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    if st.button(
+                        f"📋 {position['PositionTitle']}\n"
+                        f"📍 {position['Location']}",
+                        key=f"pos_{position['JobID']}"
+                    ):
+                        st.session_state.selected_position_id = position['JobID']
+                        st.switch_page("pages/02_Position_Detail.py")
+                
+                with col2:
+                    try:
+                        posted_date = datetime.strptime(position['StartDate'], '%a, %d %b %Y %H:%M:%S GMT')
+                        st.write(f"Posted: {posted_date.strftime('%Y-%m-%d')}")
+                    except Exception as e:
+                        st.write("Date not available")
+                st.markdown("---")
+    else:
+        st.header("Available Positions")
+        st.info("No positions found matching your criteria.")
 else:
+    # Show all positions when no filters are applied
     positions = load_positions()
-
-# Main content area
-st.title("Available Positions")
-
-# Display positions as clickable cards
-if positions:
-    for position in positions:
-        col1, col2 = st.columns([4, 1])
-        with col1:
-            if st.button(
-                f"📋 {position['PositionTitle']}\n"
-                f"📍 {position['Location']}",
-                key=f"pos_{position['JobID']}"
-            ):
-                st.session_state.selected_position_id = position['JobID']
-                st.switch_page("pages/02_Position_Detail.py")
-        
-        with col2:
-            st.write(f"Posted: {position['StartDate']}")
-        st.markdown("---")
-else:
-    st.info("No positions found matching your criteria.") 
+    st.header("Available Positions")
+    if positions:
+        for position in positions:
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                if st.button(
+                    f"📋 {position['PositionTitle']}\n"
+                    f"📍 {position['Location']}",
+                    key=f"pos_{position['JobID']}"
+                ):
+                    st.session_state.selected_position_id = position['JobID']
+                    st.switch_page("pages/02_Position_Detail.py")
+            
+            with col2:
+                try:
+                    posted_date = datetime.strptime(position['StartDate'], '%a, %d %b %Y %H:%M:%S GMT')
+                    st.write(f"Posted: {posted_date.strftime('%Y-%m-%d')}")
+                except Exception as e:
+                    st.write("Date not available")
+            st.markdown("---")

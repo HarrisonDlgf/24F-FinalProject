@@ -25,5 +25,5 @@ if st.button('View Full-Time Job Opportunities',
 if st.button('Provide Feedback on Startups', 
              type='primary',
              use_container_width=True):
-    st.switch_page('pages/03_Student_Feedback.py')
+    st.switch_page('pages/startup_post_feedback.py')
 
